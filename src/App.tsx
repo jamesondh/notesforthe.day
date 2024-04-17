@@ -18,6 +18,7 @@ export default function App() {
   const [morningMoods, setMorningMoods] = useState<checkboxItem[]>(
     initialMorningMoods.map((mood) => ({ name: mood, checked: false })),
   );
+  const [environmentNotes, setEnvironmentNotes] = useState<string>("");
 
   const handleMorningMoodCheckboxChange = (itemName: string) => {
     setMorningMoods((prevState) =>
@@ -44,6 +45,7 @@ export default function App() {
 
   const resetState = () => {
     setMorningNotes("");
+    setEnvironmentNotes("");
     setMorningMoods(
       initialMorningMoods.map((mood) => ({ name: mood, checked: false })),
     );
@@ -51,7 +53,7 @@ export default function App() {
 
   const handleResetDay = () => {
     const confirmReset = window.confirm(
-      "Are you sure you want to reset all of today's data?",
+      "Are you sure you want to reset all of today's notes?",
     );
     if (confirmReset) {
       resetState();
@@ -64,6 +66,7 @@ export default function App() {
     if (savedData) {
       const data = JSON.parse(savedData);
       setMorningNotes(data.morningNotes);
+      setEnvironmentNotes(data.environmentNotes);
       setMorningMoods(
         data.morningMoods ||
           initialMorningMoods.map((mood) => ({ name: mood, checked: false })),
@@ -76,10 +79,10 @@ export default function App() {
 
   useEffect(() => {
     if (isLoaded) {
-      const saveData = { morningNotes, morningMoods };
+      const saveData = { morningNotes, environmentNotes, morningMoods };
       localStorage.setItem(`dailies-${date}`, JSON.stringify(saveData));
     }
-  }, [morningNotes, morningMoods, isLoaded, date]);
+  }, [morningNotes, environmentNotes, morningMoods, isLoaded, date]);
 
   return (
     <div className="container mx-auto px-2">
@@ -91,12 +94,20 @@ export default function App() {
         value={morningNotes}
         onChange={setMorningNotes}
       />
+      <Textarea
+        label="Environment"
+        placeholder="Where am I? What's the weather today?"
+        value={environmentNotes}
+        onChange={setEnvironmentNotes}
+        rows={2}
+      />
       <Checkboxes
         label="Morning mood"
         list={morningMoods}
         onCheck={handleMorningMoodCheckboxChange}
         onRemove={handleMorningMoodRemoveItem}
         onAdd={handleMorningMoodAddItem}
+        addPlaceholder="Add new mood..."
       />
       <Footer />
     </div>

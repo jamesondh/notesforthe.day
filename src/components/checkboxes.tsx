@@ -9,6 +9,7 @@ interface CheckboxProps {
   onCheck: (item: string) => void;
   onRemove: (item: string) => void;
   onAdd: (item: string) => void;
+  addPlaceholder: string;
 }
 
 const itemBackground = (checked: boolean) =>
@@ -22,6 +23,7 @@ export default function Checkboxes({
   onCheck,
   onRemove,
   onAdd,
+  addPlaceholder,
 }: CheckboxProps) {
   const [inputValue, setInputValue] = useState("");
 
@@ -80,7 +82,7 @@ export default function Checkboxes({
       ))}
       <div className="flex">
         <InputText
-          placeholder="Add new mood..."
+          placeholder={addPlaceholder}
           value={inputValue}
           onChange={(e) => setInputValue(e)}
           onKeyPress={handleKeyPress}

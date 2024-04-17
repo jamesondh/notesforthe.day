@@ -3,6 +3,7 @@ interface TextareaProps {
   placeholder: string;
   value: string;
   onChange: (value: string) => void;
+  rows?: number;
 }
 
 export default function Textarea({
@@ -10,6 +11,7 @@ export default function Textarea({
   placeholder,
   value,
   onChange,
+  rows = 4,
 }: TextareaProps) {
   return (
     <div className="mb-2">
@@ -19,7 +21,7 @@ export default function Textarea({
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        rows={4}
+        rows={rows}
         cols={50}
       />
     </div>
