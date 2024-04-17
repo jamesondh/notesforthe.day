@@ -19,7 +19,6 @@ export default function LoadOrInitializeData({
 }: LoadOrInitializeDataProps) {
   useEffect(() => {
     if (!date || !label) return;
-    console.log("LoadOrInitializeData", date, label);
 
     setIsLoaded(false);
     const savedData = localStorage.getItem(getDatabaseKey(date, label));

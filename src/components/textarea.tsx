@@ -22,7 +22,7 @@ export default function Textarea({
   PushUpdateToDb({ date, label, isLoaded, value });
 
   return (
-    <div className="mb-2">
+    <div className="mb-3">
       <p className="mb-1">{label}</p>
       <textarea
         className="text-white bg-black border p-1 w-full rounded border-gray-700"

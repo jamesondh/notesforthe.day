@@ -37,7 +37,6 @@ export default function Checkboxes({
   PushUpdateToDb({ date, label, isLoaded, value: list });
 
   const handleCheckboxChange = (itemName: string) => {
-    console.log("handleCheckboxChange", itemName);
     setList((prevState) =>
       prevState.map((mood) =>
         mood.name === itemName ? { ...mood, checked: !mood.checked } : mood,
@@ -46,12 +45,10 @@ export default function Checkboxes({
   };
 
   const handleRemoveItem = (itemName: string) => {
-    console.log("handleRemoveItem", itemName);
     setList((prevState) => prevState.filter((mood) => mood.name !== itemName));
   };
 
   const handleAddItem = () => {
-    console.log("handleAddItem", inputValue);
     const newItem = inputValue.trim();
     if (newItem !== "") {
       // if list does not already contain the item, add it
@@ -72,7 +69,7 @@ export default function Checkboxes({
   };
 
   return (
-    <div className="mb-2">
+    <div className="mb-3">
       <p>{label}</p>
       {list &&
         list.map((item) => (
