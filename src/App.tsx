@@ -71,7 +71,7 @@ export default function App() {
     <div className="container mx-auto">
       <Header date={date} setDate={setDate} />
 
-      <p>How do I feel this morning?</p>
+      <p>Morning notes</p>
       <Textarea
         placeholder="How did I sleep last night? What did I dream about? What's on my mind?"
         value={morningNotes}
