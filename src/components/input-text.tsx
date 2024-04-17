@@ -1,17 +1,24 @@
 interface InputTextProps {
   placeholder: string;
+  value: string;
+  onChange: (value: string) => void;
   onKeyPress: (value: string) => void;
 }
 
-export default function InputText({ placeholder, onKeyPress }: InputTextProps) {
+export default function InputText({
+  placeholder,
+  value,
+  onChange,
+  onKeyPress,
+}: InputTextProps) {
   return (
     <input
       type="text"
+      value={value}
       placeholder={placeholder}
-      className="text-white bg-black border p-1 my-1 w-full rounded border-gray-700"
-      onKeyPress={(e) => {
-        if (e.key === "Enter") onKeyPress((e.target as HTMLInputElement).value);
-      }}
+      className="text-white p-1 bg-black border w-full rounded border-gray-700"
+      onKeyPress={(e) => onKeyPress(e.key)}
+      onChange={(e) => onChange(e.target.value)}
     />
   );
 }

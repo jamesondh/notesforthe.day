@@ -1,3 +1,4 @@
+import { useState } from "react";
 import classNames from "classnames";
 import { checkboxItem } from "../types";
 import InputText from "./input-text";
@@ -22,6 +23,21 @@ export default function Checkboxes({
   onRemove,
   onAdd,
 }: CheckboxProps) {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleAddItem = () => {
+    if (inputValue.trim() !== "") {
+      onAdd(inputValue.trim());
+      setInputValue("");
+    }
+  };
+
+  const handleKeyPress = (key: string) => {
+    if (key === "Enter") {
+      handleAddItem();
+    }
+  };
+
   return (
     <div className="mb-2">
       <p>{label}</p>
@@ -48,13 +64,34 @@ export default function Checkboxes({
                 {item.name}
               </span>
             </div>
-            <button className="mr-4 btn" onClick={() => onRemove(item.name)}>
-              Remove
-            </button>
+            <div>
+              {/* <button className="mr-4 btn text-sm bg-black rounded px-2">
+              Edit
+            </button> */}
+              <button
+                className="mr-4 btn text-sm bg-black rounded px-2"
+                onClick={() => onRemove(item.name)}
+              >
+                Remove
+              </button>
+            </div>
           </label>
         </div>
       ))}
-      <InputText placeholder="Add new mood..." onKeyPress={onAdd} />
+      <div className="flex">
+        <InputText
+          placeholder="Add new mood..."
+          value={inputValue}
+          onChange={(e) => setInputValue(e)}
+          onKeyPress={handleKeyPress}
+        />
+        <button
+          className="ml-1 btn bg-black rounded px-2 border border-gray-700"
+          onClick={handleAddItem}
+        >
+          Add
+        </button>
+      </div>
     </div>
   );
 }
