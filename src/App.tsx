@@ -71,14 +71,14 @@ export default function App() {
     <div className="container mx-auto">
       <Header date={date} setDate={setDate} />
 
-      <p>Morning notes</p>
       <Textarea
+        label="Morning notes"
         placeholder="How did I sleep last night? What did I dream about? What's on my mind?"
         value={morningNotes}
         onChange={setMorningNotes}
       />
-      <p>Morning mood</p>
       <Checkboxes
+        label="Morning mood"
         list={items}
         checkedState={checkedState}
         onCheck={handleCheckboxChange}

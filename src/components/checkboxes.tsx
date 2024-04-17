@@ -2,6 +2,7 @@ import classNames from "classnames";
 import InputText from "./input-text";
 
 interface CheckboxProps {
+  label: string;
   list: string[];
   checkedState: { [key: string]: boolean };
   onCheck: (item: string) => void;
@@ -15,6 +16,7 @@ const itemStrikethrough = (checked: boolean) =>
   checked ? "line-through" : "none";
 
 export default function Checkboxes({
+  label,
   list,
   checkedState,
   onCheck,
@@ -22,7 +24,8 @@ export default function Checkboxes({
   onAdd,
 }: CheckboxProps) {
   return (
-    <div>
+    <div className="mb-2">
+      <p>{label}</p>
       {list.map((item) => (
         <div
           className={classNames(
