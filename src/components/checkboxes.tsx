@@ -14,22 +14,22 @@ export default function Checkboxes({
   return (
     <div>
       {list.map((item) => (
-        <label key={item}>
-          <input
-            type="checkbox"
-            checked={checkedState[item]}
-            onChange={() => onChange(item)}
-            className="mr-2 mb-2"
-          />
-          {item}
-          <button
-            className="ml-2 btn border border-gray-600 rounded-sm px-1"
-            onClick={() => onRemove(item)}
-          >
-            X
-          </button>
-          <br />
-        </label>
+        <div className="rounded my-1 py-2 bg-gray-800">
+          <label className="flex justify-between" key={item}>
+            <div className="ml-4">
+              <input
+                type="checkbox"
+                checked={checkedState[item]}
+                onChange={() => onChange(item)}
+                className="mr-2 mb-2"
+              />
+              {item}
+            </div>
+            <button className="mr-4 btn" onClick={() => onRemove(item)}>
+              Remove
+            </button>
+          </label>
+        </div>
       ))}
     </div>
   );

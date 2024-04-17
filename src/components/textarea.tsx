@@ -11,7 +11,7 @@ export default function Textarea({
 }: TextareaProps) {
   return (
     <textarea
-      className="text-white bg-black border p-1 w-full rounded border-gray-600"
+      className="text-white bg-black border p-1 w-full rounded border-gray-700"
       placeholder={placeholder}
       value={value}
       onChange={(e) => onChange(e.target.value)}

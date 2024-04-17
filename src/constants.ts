@@ -1,8 +1,8 @@
 export const morningMoods: string[] = [
-  "tired",
-  "motivated",
-  "lazy",
-  "sick",
-  "happy",
-  "grumpy",
+  "Tired",
+  "Motivated",
+  "Lazy",
+  "Sick",
+  "Happy",
+  "Grumpy",
 ];

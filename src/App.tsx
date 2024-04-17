@@ -45,10 +45,18 @@ export default function App() {
     setIsLoaded(false);
     const savedData = localStorage.getItem(`dailies-${date}`);
     if (savedData) {
+      // load data associated with the date, if it exists in localStorage
       const data = JSON.parse(savedData);
       setMorningNotes(data.morningNotes);
       setCheckedState(data.checkedState);
       setItems(Object.keys(data.checkedState));
+    } else {
+      // otherwise, reset the state
+      setMorningNotes("");
+      setCheckedState(
+        morningMoods.reduce((acc, mood) => ({ ...acc, [mood]: false }), {}),
+      );
+      setItems(morningMoods);
     }
     setIsLoaded(true);
   }, [date]);
@@ -64,14 +72,13 @@ export default function App() {
     <div className="container mx-auto">
       <Header date={date} setDate={setDate} />
 
-      <h2 className="text-lg">Morning</h2>
-      <p>Notes</p>
+      <p>How do I feel this morning?</p>
       <Textarea
-        placeholder="How are you feeling today?"
+        placeholder="How did I sleep last night? What did I dream about? What's on my mind?"
         value={morningNotes}
         onChange={setMorningNotes}
       />
-      <p>Mood</p>
+      <p>Morning mood</p>
       <Checkboxes
         list={items}
         checkedState={checkedState}
