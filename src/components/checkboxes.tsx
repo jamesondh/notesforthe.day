@@ -1,10 +1,12 @@
 import classNames from "classnames";
+import InputText from "./input-text";
 
 interface CheckboxProps {
   list: string[];
   checkedState: { [key: string]: boolean };
-  onChange: (item: string) => void;
+  onCheck: (item: string) => void;
   onRemove: (item: string) => void;
+  onAdd: (item: string) => void;
 }
 
 const itemBackground = (checked: boolean) =>
@@ -15,8 +17,9 @@ const itemStrikethrough = (checked: boolean) =>
 export default function Checkboxes({
   list,
   checkedState,
-  onChange,
+  onCheck,
   onRemove,
+  onAdd,
 }: CheckboxProps) {
   return (
     <div>
@@ -32,7 +35,7 @@ export default function Checkboxes({
               <input
                 type="checkbox"
                 checked={checkedState[item]}
-                onChange={() => onChange(item)}
+                onChange={() => onCheck(item)}
                 className="mr-2 mb-2"
               />
               <span
@@ -49,6 +52,7 @@ export default function Checkboxes({
           </label>
         </div>
       ))}
+      <InputText placeholder="Add new mood..." onKeyPress={onAdd} />
     </div>
   );
 }

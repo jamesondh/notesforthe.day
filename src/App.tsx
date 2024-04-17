@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { morningMoods } from "./constants";
 import Checkboxes from "./components/checkboxes";
 import Textarea from "./components/textarea";
-import InputText from "./components/input-text";
 import Header from "./components/header";
 import Footer from "./components/footer";
 
@@ -82,11 +81,10 @@ export default function App() {
       <Checkboxes
         list={items}
         checkedState={checkedState}
-        onChange={handleCheckboxChange}
+        onCheck={handleCheckboxChange}
         onRemove={handleRemoveItem}
+        onAdd={handleAddItem}
       />
-      <InputText placeholder="Add new mood..." onKeyPress={handleAddItem} />
-
       <Footer />
     </div>
   );
