@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 body {
-  background-color: black;
-  color: white;
+  @apply bg-black text-white;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }

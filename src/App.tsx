@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { morningMoods } from "./constants";
 import Checkboxes from "./components/checkboxes";
-import DateSelector from "./components/date-selector";
 import Textarea from "./components/textarea";
 import InputText from "./components/input-text";
-import Hr from "./components/hr";
+import Header from "./components/header";
+import Footer from "./components/footer";
 
 export default function App() {
   const [date, setDate] = useState<string>(() => {
@@ -62,9 +62,7 @@ export default function App() {
 
   return (
     <div className="container mx-auto">
-      <h1 className="text-2xl">Dailies</h1>
-      <DateSelector value={date} onChange={setDate} />
-      <Hr />
+      <Header date={date} setDate={setDate} />
 
       <h2 className="text-lg">Morning</h2>
       <p>Notes</p>
@@ -74,14 +72,15 @@ export default function App() {
         onChange={setMorningNotes}
       />
       <p>Mood</p>
-      <InputText placeholder="Add new mood..." onKeyPress={handleAddItem} />
       <Checkboxes
         list={items}
         checkedState={checkedState}
         onChange={handleCheckboxChange}
         onRemove={handleRemoveItem}
       />
-      <Hr />
+      <InputText placeholder="Add new mood..." onKeyPress={handleAddItem} />
+
+      <Footer />
     </div>
   );
 }

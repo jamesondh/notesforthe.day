@@ -19,11 +19,11 @@ export default function Checkboxes({
             type="checkbox"
             checked={checkedState[item]}
             onChange={() => onChange(item)}
-            className="mr-2"
+            className="mr-2 mb-2"
           />
           {item}
           <button
-            className="ml-2 btn border rounded-sm px-1"
+            className="ml-2 btn border border-gray-600 rounded-sm px-1"
             onClick={() => onRemove(item)}
           >
             X

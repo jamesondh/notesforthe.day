@@ -8,7 +8,7 @@ export default function InputText({ placeholder, onKeyPress }: InputTextProps) {
     <input
       type="text"
       placeholder={placeholder}
-      className="text-white bg-black border p-1 mb-1 w-full"
+      className="text-white bg-black border p-1 my-1 w-full rounded border-gray-600"
       onKeyPress={(e) => {
         if (e.key === "Enter") onKeyPress((e.target as HTMLInputElement).value);
       }}
