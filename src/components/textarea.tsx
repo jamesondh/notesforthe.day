@@ -1,18 +1,26 @@
+import { useState } from "react";
+import LoadOrInitializeData from "../hooks/load-or-initialize-data";
+import PushUpdateToDb from "../hooks/push-update-to-db";
+
 interface TextareaProps {
   label: string;
+  date: string;
   placeholder: string;
-  value: string;
-  onChange: (value: string) => void;
   rows?: number;
 }
 
 export default function Textarea({
   label,
+  date,
   placeholder,
-  value,
-  onChange,
   rows = 4,
 }: TextareaProps) {
+  const [value, setValue] = useState<string>("");
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  LoadOrInitializeData({ date, label, setValue, setIsLoaded });
+  PushUpdateToDb({ date, label, isLoaded, value });
+
   return (
     <div className="mb-2">
       <p className="mb-1">{label}</p>
@@ -20,7 +28,7 @@ export default function Textarea({
         className="text-white bg-black border p-1 w-full rounded border-gray-700"
         placeholder={placeholder}
         value={value}
-        onChange={(e) => onChange(e.target.value)}
+        onChange={(e) => setValue(e.target.value)}
         rows={rows}
         cols={50}
       />

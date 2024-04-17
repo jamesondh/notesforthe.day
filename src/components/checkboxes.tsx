@@ -1,14 +1,14 @@
 import { useState } from "react";
 import classNames from "classnames";
-import { checkboxItem } from "../types";
+import { CheckboxItem } from "../types";
 import InputText from "./input-text";
+import LoadOrInitializeData from "../hooks/load-or-initialize-data";
+import PushUpdateToDb from "../hooks/push-update-to-db";
 
 interface CheckboxProps {
   label: string;
-  list: checkboxItem[];
-  onCheck: (item: string) => void;
-  onRemove: (item: string) => void;
-  onAdd: (item: string) => void;
+  date: string;
+  initialList: string[];
   addPlaceholder: string;
 }
 
@@ -19,17 +19,48 @@ const itemStrikethrough = (checked: boolean) =>
 
 export default function Checkboxes({
   label,
-  list,
-  onCheck,
-  onRemove,
-  onAdd,
+  date,
+  initialList,
   addPlaceholder,
 }: CheckboxProps) {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState<string>("");
+  const [list, setList] = useState<CheckboxItem[]>([]);
+  const [isLoaded, setIsLoaded] = useState<boolean>(false);
+
+  LoadOrInitializeData({
+    date,
+    label,
+    initialValue: initialList.map((item) => ({ name: item, checked: false })),
+    setValue: setList,
+    setIsLoaded,
+  });
+  PushUpdateToDb({ date, label, isLoaded, value: list });
+
+  const handleCheckboxChange = (itemName: string) => {
+    console.log("handleCheckboxChange", itemName);
+    setList((prevState) =>
+      prevState.map((mood) =>
+        mood.name === itemName ? { ...mood, checked: !mood.checked } : mood,
+      ),
+    );
+  };
+
+  const handleRemoveItem = (itemName: string) => {
+    console.log("handleRemoveItem", itemName);
+    setList((prevState) => prevState.filter((mood) => mood.name !== itemName));
+  };
 
   const handleAddItem = () => {
-    if (inputValue.trim() !== "") {
-      onAdd(inputValue.trim());
+    console.log("handleAddItem", inputValue);
+    const newItem = inputValue.trim();
+    if (newItem !== "") {
+      // if list does not already contain the item, add it
+      if (
+        list.length === 0 ||
+        !list.map((item) => item.name).includes(newItem)
+      ) {
+        setList((prevList) => [...prevList, { name: newItem, checked: false }]);
+      }
       setInputValue("");
     }
   };
@@ -43,43 +74,45 @@ export default function Checkboxes({
   return (
     <div className="mb-2">
       <p>{label}</p>
-      {list.map((item) => (
-        <div
-          className={classNames(
-            "rounded my-1 py-2",
-            itemBackground(item.checked),
-          )}
-        >
-          <label className="flex justify-between" key={item.name}>
-            <div className="ml-4">
-              <input
-                type="checkbox"
-                checked={item.checked}
-                onChange={() => onCheck(item.name)}
-                className="mr-2 mb-2"
-              />
-              <span
-                style={{
-                  textDecoration: itemStrikethrough(item.checked),
-                }}
-              >
-                {item.name}
-              </span>
-            </div>
-            <div>
-              {/* <button className="mr-4 btn text-sm bg-black rounded px-2">
+      {list &&
+        list.map((item) => (
+          <div
+            className={classNames(
+              "rounded my-1 py-2",
+              itemBackground(item.checked),
+            )}
+            key={item.name}
+          >
+            <label className="flex justify-between" key={item.name}>
+              <div className="ml-4">
+                <input
+                  type="checkbox"
+                  checked={item.checked}
+                  onChange={() => handleCheckboxChange(item.name)}
+                  className="mr-2 mb-2"
+                />
+                <span
+                  style={{
+                    textDecoration: itemStrikethrough(item.checked),
+                  }}
+                >
+                  {item.name}
+                </span>
+              </div>
+              <div>
+                {/* <button className="mr-4 btn text-sm bg-black rounded px-2">
               Edit
             </button> */}
-              <button
-                className="mr-4 btn text-sm bg-black rounded px-2"
-                onClick={() => onRemove(item.name)}
-              >
-                Remove
-              </button>
-            </div>
-          </label>
-        </div>
-      ))}
+                <button
+                  className="mr-4 btn text-sm bg-black rounded px-2"
+                  onClick={() => handleRemoveItem(item.name)}
+                >
+                  Remove
+                </button>
+              </div>
+            </label>
+          </div>
+        ))}
       <div className="flex">
         <InputText
           placeholder={addPlaceholder}
