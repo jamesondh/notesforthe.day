@@ -1,22 +1,21 @@
 import { useEffect } from "react";
 import { getDatabaseKey } from "../utils";
-import { CheckboxItem } from "../types";
 
-interface LoadOrInitializeDataProps {
+interface LoadOrInitializeDataProps<T> {
   date: string;
   label: string;
-  initialValue?: CheckboxItem[] | string;
-  setValue: React.Dispatch<React.SetStateAction<CheckboxItem[] | string>>;
+  initialValue?: T;
+  setValue: React.Dispatch<React.SetStateAction<T>>;
   setIsLoaded: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function LoadOrInitializeData({
+export default function LoadOrInitializeData<T>({
   date,
   label,
-  initialValue = "",
+  initialValue = "" as T,
   setValue,
   setIsLoaded,
-}: LoadOrInitializeDataProps) {
+}: LoadOrInitializeDataProps<T>) {
   useEffect(() => {
     if (!date || !label) return;
 
