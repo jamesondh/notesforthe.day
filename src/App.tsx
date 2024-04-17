@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { morningMoods } from "./constants";
+import { checkboxItem } from "./types";
+import { initialMorningMoods } from "./constants";
 import Checkboxes from "./components/checkboxes";
 import Textarea from "./components/textarea";
 import Header from "./components/header";
@@ -14,38 +15,38 @@ export default function App() {
   });
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
   const [morningNotes, setMorningNotes] = useState<string>("");
-  const [items, setItems] = useState<string[]>(morningMoods);
-  const [checkedState, setCheckedState] = useState<{ [key: string]: boolean }>(
-    morningMoods.reduce((acc, mood) => ({ ...acc, [mood]: false }), {}),
+  const [morningMoods, setMorningMoods] = useState<checkboxItem[]>(
+    initialMorningMoods.map((mood) => ({ name: mood, checked: false })),
   );
 
-  const handleCheckboxChange = (item: string) => {
-    setCheckedState((prevState) => ({
-      ...prevState,
-      [item]: !prevState[item],
-    }));
+  const handleMorningMoodCheckboxChange = (itemName: string) => {
+    setMorningMoods((prevState) =>
+      prevState.map((mood) =>
+        mood.name === itemName ? { ...mood, checked: !mood.checked } : mood,
+      ),
+    );
   };
 
-  const handleRemoveItem = (item: string) => {
-    setItems((prevItems) => prevItems.filter((x) => x !== item));
-    const newState = { ...checkedState };
-    delete newState[item];
-    setCheckedState(newState);
+  const handleMorningMoodRemoveItem = (itemName: string) => {
+    setMorningMoods((prevState) =>
+      prevState.filter((mood) => mood.name !== itemName),
+    );
   };
 
-  const handleAddItem = (newItem: string) => {
-    if (newItem && !items.includes(newItem)) {
-      setItems([...items, newItem]);
-      setCheckedState((prevState) => ({ ...prevState, [newItem]: false }));
+  const handleMorningMoodAddItem = (newItem: string) => {
+    if (newItem && !morningMoods.some((mood) => mood.name === newItem)) {
+      setMorningMoods((prevMoods) => [
+        ...prevMoods,
+        { name: newItem, checked: false },
+      ]);
     }
   };
 
   const resetState = () => {
     setMorningNotes("");
-    setCheckedState(
-      morningMoods.reduce((acc, mood) => ({ ...acc, [mood]: false }), {}),
+    setMorningMoods(
+      initialMorningMoods.map((mood) => ({ name: mood, checked: false })),
     );
-    setItems(morningMoods);
   };
 
   const handleResetDay = () => {
@@ -57,28 +58,28 @@ export default function App() {
     }
   };
 
-  // Initialize state from localStorage or reset it if it doesn't exist
   useEffect(() => {
     setIsLoaded(false);
     const savedData = localStorage.getItem(`dailies-${date}`);
     if (savedData) {
       const data = JSON.parse(savedData);
       setMorningNotes(data.morningNotes);
-      setCheckedState(data.checkedState);
-      setItems(Object.keys(data.checkedState));
+      setMorningMoods(
+        data.morningMoods ||
+          initialMorningMoods.map((mood) => ({ name: mood, checked: false })),
+      );
     } else {
       resetState();
     }
     setIsLoaded(true);
   }, [date]);
 
-  // Update localStorage when state changes
   useEffect(() => {
     if (isLoaded) {
-      const saveData = { morningNotes, checkedState };
+      const saveData = { morningNotes, morningMoods };
       localStorage.setItem(`dailies-${date}`, JSON.stringify(saveData));
     }
-  }, [morningNotes, checkedState, isLoaded, date]);
+  }, [morningNotes, morningMoods, isLoaded, date]);
 
   return (
     <div className="container mx-auto px-2">
@@ -92,11 +93,10 @@ export default function App() {
       />
       <Checkboxes
         label="Morning mood"
-        list={items}
-        checkedState={checkedState}
-        onCheck={handleCheckboxChange}
-        onRemove={handleRemoveItem}
-        onAdd={handleAddItem}
+        list={morningMoods}
+        onCheck={handleMorningMoodCheckboxChange}
+        onRemove={handleMorningMoodRemoveItem}
+        onAdd={handleMorningMoodAddItem}
       />
       <Footer />
     </div>

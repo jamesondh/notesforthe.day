@@ -1,10 +1,10 @@
 import classNames from "classnames";
+import { checkboxItem } from "../types";
 import InputText from "./input-text";
 
 interface CheckboxProps {
   label: string;
-  list: string[];
-  checkedState: { [key: string]: boolean };
+  list: checkboxItem[];
   onCheck: (item: string) => void;
   onRemove: (item: string) => void;
   onAdd: (item: string) => void;
@@ -18,7 +18,6 @@ const itemStrikethrough = (checked: boolean) =>
 export default function Checkboxes({
   label,
   list,
-  checkedState,
   onCheck,
   onRemove,
   onAdd,
@@ -30,26 +29,26 @@ export default function Checkboxes({
         <div
           className={classNames(
             "rounded my-1 py-2",
-            itemBackground(checkedState[item]),
+            itemBackground(item.checked),
           )}
         >
-          <label className="flex justify-between" key={item}>
+          <label className="flex justify-between" key={item.name}>
             <div className="ml-4">
               <input
                 type="checkbox"
-                checked={checkedState[item]}
-                onChange={() => onCheck(item)}
+                checked={item.checked}
+                onChange={() => onCheck(item.name)}
                 className="mr-2 mb-2"
               />
               <span
                 style={{
-                  textDecoration: itemStrikethrough(checkedState[item]),
+                  textDecoration: itemStrikethrough(item.checked),
                 }}
               >
-                {item}
+                {item.name}
               </span>
             </div>
-            <button className="mr-4 btn" onClick={() => onRemove(item)}>
+            <button className="mr-4 btn" onClick={() => onRemove(item.name)}>
               Remove
             </button>
           </label>

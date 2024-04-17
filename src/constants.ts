@@ -1,4 +1,4 @@
-export const morningMoods: string[] = [
+export const initialMorningMoods: string[] = [
   "Tired",
   "Motivated",
   "Lazy",
