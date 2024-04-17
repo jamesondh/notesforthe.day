@@ -40,26 +40,39 @@ export default function App() {
     }
   };
 
+  const resetState = () => {
+    setMorningNotes("");
+    setCheckedState(
+      morningMoods.reduce((acc, mood) => ({ ...acc, [mood]: false }), {}),
+    );
+    setItems(morningMoods);
+  };
+
+  const handleResetDay = () => {
+    const confirmReset = window.confirm(
+      "Are you sure you want to reset all of today's data?",
+    );
+    if (confirmReset) {
+      resetState();
+    }
+  };
+
+  // Initialize state from localStorage or reset it if it doesn't exist
   useEffect(() => {
     setIsLoaded(false);
     const savedData = localStorage.getItem(`dailies-${date}`);
     if (savedData) {
-      // load data associated with the date, if it exists in localStorage
       const data = JSON.parse(savedData);
       setMorningNotes(data.morningNotes);
       setCheckedState(data.checkedState);
       setItems(Object.keys(data.checkedState));
     } else {
-      // otherwise, reset the state
-      setMorningNotes("");
-      setCheckedState(
-        morningMoods.reduce((acc, mood) => ({ ...acc, [mood]: false }), {}),
-      );
-      setItems(morningMoods);
+      resetState();
     }
     setIsLoaded(true);
   }, [date]);
 
+  // Update localStorage when state changes
   useEffect(() => {
     if (isLoaded) {
       const saveData = { morningNotes, checkedState };
@@ -68,8 +81,8 @@ export default function App() {
   }, [morningNotes, checkedState, isLoaded, date]);
 
   return (
-    <div className="container mx-auto">
-      <Header date={date} setDate={setDate} />
+    <div className="container mx-auto px-2">
+      <Header date={date} setDate={setDate} handleResetDay={handleResetDay} />
 
       <Textarea
         label="Morning notes"
