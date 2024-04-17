@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import DateSelector from "./date-selector";
 import Hr from "./hr";
 
@@ -10,16 +11,22 @@ interface HeaderProps {
 
 export default function Header({ date, setDate, handleResetDay }: HeaderProps) {
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
+  const navigate = useNavigate();
 
   const toggleSettings = () => {
     setIsSettingsVisible(!isSettingsVisible);
+  };
+
+  const handleDateChange = (newDate: string) => {
+    setDate(newDate);
+    navigate(`/${newDate}`);
   };
 
   return (
     <>
       <div className="flex justify-between mt-3 mx-2">
         <h1 className="text-xl">☑️ notesforthe.day</h1>
-        <DateSelector value={date} onChange={setDate} />
+        <DateSelector value={date} onChange={handleDateChange} />
         <button className="btn" onClick={toggleSettings}>
           ⚙️
         </button>
