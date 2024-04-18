@@ -22,10 +22,10 @@ export default function Textarea({
   PushUpdateToDb({ date, label, isLoaded, value });
 
   return (
-    <div className="mb-3">
+    <div className="mb-4">
       <p className="mb-1">{label}</p>
       <textarea
-        className="text-white bg-black border p-1 w-full rounded border-gray-700"
+        className="text-white bg-backgroundPrimaryDark shadow-lg p-3 w-full rounded border-gray-700"
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}

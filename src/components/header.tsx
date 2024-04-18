@@ -27,10 +27,10 @@ export default function Header({ date, setDate, handleResetDay }: HeaderProps) {
   };
 
   return (
-    <>
+    <div className="mb-4">
       <div className="flex justify-between mt-3 mx-2">
         <h1 className="text-xl">
-          <Link to="/">☑️ notesforthe.day</Link>
+          <Link to="/">☑️ NotesForThe.Day</Link>
         </h1>
         {setDate && date && (
           <>
@@ -59,6 +59,6 @@ export default function Header({ date, setDate, handleResetDay }: HeaderProps) {
       )}
 
       <Hr />
-    </>
+    </div>
   );
 }

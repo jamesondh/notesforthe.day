@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 body {
-  @apply bg-black text-white;
-  font-family: "Quicksand", sans-serif;
+  @apply text-white bg-backgroundPrimary;
+  font-family: "Noto Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;

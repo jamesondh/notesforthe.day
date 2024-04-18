@@ -94,7 +94,7 @@ export default function Checkboxes({
   }
 
   return (
-    <div className="mb-3">
+    <div className="mb-5">
       <p>{label}</p>
       {list && (
         <DragDropContext onDragEnd={onDragEnd}>
@@ -124,7 +124,7 @@ export default function Checkboxes({
           onKeyPress={handleKeyPress}
         />
         <button
-          className="ml-1 btn bg-black rounded px-2 border border-gray-700"
+          className="ml-1 btn bg-backgroundPrimaryDark rounded px-6 shadow"
           onClick={handleAddItem}
         >
           Add

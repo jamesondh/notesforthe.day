@@ -10,7 +10,7 @@ interface CheckboxProps {
 }
 
 const itemBackground = (checked: boolean) =>
-  checked ? "bg-gray-900" : "bg-gray-800";
+  checked ? "bg-backgroundPrimaryDarker" : "bg-backgroundPrimaryDark";
 const itemStrikethrough = (checked: boolean) =>
   checked ? "line-through" : "none";
 
@@ -25,7 +25,7 @@ export default function Checkbox({
       {(provided) => (
         <div
           className={classNames(
-            "rounded my-1 py-2 shadow",
+            "rounded my-1 py-3 shadow",
             itemBackground(item.checked),
           )}
           key={item.name}
@@ -51,7 +51,7 @@ export default function Checkbox({
             </div>
             <div>
               <button
-                className="mr-4 text-sm text-gray-500 px-2 h-full"
+                className="mr-1 md:mr-4 text-sm text-gray-500 px-2 h-full"
                 onClick={() => handleRemoveItem(item.name)}
               >
                 Remove

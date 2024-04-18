@@ -16,7 +16,7 @@ export default function InputText({
       type="text"
       value={value}
       placeholder={placeholder}
-      className="text-white p-1 bg-black border w-full rounded border-gray-700"
+      className="text-white p-3 bg-backgroundPrimaryDark shadow-lg w-full rounded"
       onKeyPress={(e) => onKeyPress(e.key)}
       onChange={(e) => onChange(e.target.value)}
     />

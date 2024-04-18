@@ -13,10 +13,10 @@ export default function EditTemplate() {
         <TemplateCard inputType={InputType.Textarea} />
         <TemplateCard inputType={InputType.Checkbox} />
         <div className="flex justify-between my-6">
-          <button className="w-full btn bg-black rounded px-2 border border-gray-700 py-2 mr-1">
+          <button className="w-full btn bg-backgroundPrimaryDark rounded p-3 mr-1 shadow-lg">
             Add text input
           </button>
-          <button className="w-full btn bg-black rounded px-2 border border-gray-700 py-2 ml-1">
+          <button className="w-full btn bg-backgroundPrimaryDark rounded p-3 ml-1 shadow-lg">
             Add checkbox input
           </button>
         </div>
