@@ -34,27 +34,24 @@ export default function Checkbox({
           {...provided.dragHandleProps}
         >
           <label className="flex justify-between" key={item.name}>
-            <div className="ml-4">
+            <div className="ml-4 flex justify-between">
               <input
                 type="checkbox"
                 checked={item.checked}
                 onChange={() => handleCheckboxChange(item.name)}
-                className="mr-2 mb-2"
+                className="h-full mr-3 mb-2"
               />
-              <span
+              <p
                 style={{
                   textDecoration: itemStrikethrough(item.checked),
                 }}
               >
                 {item.name}
-              </span>
+              </p>
             </div>
             <div>
-              {/* <button className="mr-4 btn text-sm bg-black rounded px-2">
-              Edit
-            </button> */}
               <button
-                className="mr-4 text-sm text-gray-500 px-2"
+                className="mr-4 text-sm text-gray-500 px-2 h-full"
                 onClick={() => handleRemoveItem(item.name)}
               >
                 Remove
