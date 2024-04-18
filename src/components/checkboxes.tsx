@@ -90,7 +90,7 @@ export default function Checkboxes({
       result.destination.index,
     );
 
-    setList(reorderedList);
+    setList([...reorderedList]);
   }
 
   return (
