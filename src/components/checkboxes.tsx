@@ -4,6 +4,7 @@ import InputText from "./input-text";
 import Checkbox from "./checkbox";
 import LoadOrInitializeData from "../hooks/load-or-initialize-data";
 import PushUpdateToDb from "../hooks/push-update-to-db";
+import { DragDropContext, Droppable, DropResult } from "react-beautiful-dnd";
 
 interface CheckboxProps {
   label: string;
@@ -11,6 +12,18 @@ interface CheckboxProps {
   initialList: string[];
   addPlaceholder: string;
 }
+
+const reorder = (
+  list: CheckboxItem[],
+  startIndex: number,
+  endIndex: number,
+) => {
+  const result = list;
+  const [removed] = result.splice(startIndex, 1);
+  result.splice(endIndex, 0, removed);
+
+  return result;
+};
 
 export default function Checkboxes({
   label,
@@ -63,18 +76,46 @@ export default function Checkboxes({
     }
   };
 
+  function onDragEnd(result: DropResult) {
+    if (
+      !result.destination ||
+      result.destination.index === result.source.index
+    ) {
+      return;
+    }
+
+    const reorderedList = reorder(
+      list,
+      result.source.index,
+      result.destination.index,
+    );
+
+    setList(reorderedList);
+  }
+
   return (
     <div className="mb-3">
       <p>{label}</p>
-      {list &&
-        list.map((item) => (
-          <Checkbox
-            key={item.name}
-            item={item}
-            handleCheckboxChange={handleCheckboxChange}
-            handleRemoveItem={handleRemoveItem}
-          />
-        ))}
+      {list && (
+        <DragDropContext onDragEnd={onDragEnd}>
+          <Droppable droppableId="cb">
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {list.map((item, index) => (
+                  <Checkbox
+                    key={item.name}
+                    index={index}
+                    item={item}
+                    handleCheckboxChange={handleCheckboxChange}
+                    handleRemoveItem={handleRemoveItem}
+                  />
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </DragDropContext>
+      )}
       <div className="flex">
         <InputText
           placeholder={addPlaceholder}

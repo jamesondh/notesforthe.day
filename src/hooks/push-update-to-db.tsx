@@ -8,6 +8,7 @@ interface PushUpdateToDbProps {
   value: unknown;
 }
 
+// TODO: only push to db if value has changed
 export default function PushUpdateToDb({
   date,
   label,
@@ -16,6 +17,7 @@ export default function PushUpdateToDb({
 }: PushUpdateToDbProps) {
   useEffect(() => {
     if (isLoaded) {
+      // console.log("Pushing to db", date, label, value);
       localStorage.setItem(getDatabaseKey(date, label), JSON.stringify(value));
     }
   }, [value, isLoaded, date]);
