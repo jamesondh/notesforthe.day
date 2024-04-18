@@ -1,7 +1,7 @@
 import { useState } from "react";
-import classNames from "classnames";
 import { CheckboxItem } from "../types";
 import InputText from "./input-text";
+import Checkbox from "./checkbox";
 import LoadOrInitializeData from "../hooks/load-or-initialize-data";
 import PushUpdateToDb from "../hooks/push-update-to-db";
 
@@ -11,11 +11,6 @@ interface CheckboxProps {
   initialList: string[];
   addPlaceholder: string;
 }
-
-const itemBackground = (checked: boolean) =>
-  checked ? "bg-gray-900" : "bg-gray-800";
-const itemStrikethrough = (checked: boolean) =>
-  checked ? "line-through" : "none";
 
 export default function Checkboxes({
   label,
@@ -73,42 +68,12 @@ export default function Checkboxes({
       <p>{label}</p>
       {list &&
         list.map((item) => (
-          <div
-            className={classNames(
-              "rounded my-1 py-2",
-              itemBackground(item.checked),
-            )}
+          <Checkbox
             key={item.name}
-          >
-            <label className="flex justify-between" key={item.name}>
-              <div className="ml-4">
-                <input
-                  type="checkbox"
-                  checked={item.checked}
-                  onChange={() => handleCheckboxChange(item.name)}
-                  className="mr-2 mb-2"
-                />
-                <span
-                  style={{
-                    textDecoration: itemStrikethrough(item.checked),
-                  }}
-                >
-                  {item.name}
-                </span>
-              </div>
-              <div>
-                {/* <button className="mr-4 btn text-sm bg-black rounded px-2">
-              Edit
-            </button> */}
-                <button
-                  className="mr-4 btn text-sm bg-black rounded px-2"
-                  onClick={() => handleRemoveItem(item.name)}
-                >
-                  Remove
-                </button>
-              </div>
-            </label>
-          </div>
+            item={item}
+            handleCheckboxChange={handleCheckboxChange}
+            handleRemoveItem={handleRemoveItem}
+          />
         ))}
       <div className="flex">
         <InputText
