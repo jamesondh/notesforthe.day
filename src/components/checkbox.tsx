@@ -25,7 +25,7 @@ export default function Checkbox({
       {(provided) => (
         <div
           className={classNames(
-            "rounded my-1 py-2",
+            "rounded my-1 py-2 shadow",
             itemBackground(item.checked),
           )}
           key={item.name}
@@ -54,7 +54,7 @@ export default function Checkbox({
               Edit
             </button> */}
               <button
-                className="mr-4 btn text-sm bg-black rounded px-2"
+                className="mr-4 text-sm text-gray-500 px-2"
                 onClick={() => handleRemoveItem(item.name)}
               >
                 Remove

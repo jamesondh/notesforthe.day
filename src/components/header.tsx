@@ -33,11 +33,13 @@ export default function Header({ date, setDate, handleResetDay }: HeaderProps) {
           <Link to="/">☑️ notesforthe.day</Link>
         </h1>
         {setDate && date && (
-          <DateSelector value={date} onChange={handleDateChange} />
+          <>
+            <DateSelector value={date} onChange={handleDateChange} />
+            <button className="btn" onClick={toggleSettings}>
+              ⚙️
+            </button>
+          </>
         )}
-        <button className="btn" onClick={toggleSettings}>
-          ⚙️
-        </button>
       </div>
 
       {setDate && (
