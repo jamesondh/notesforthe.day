@@ -6,21 +6,31 @@ import { getDatabaseKey } from "../utils";
 import Checkboxes from "../components/checkboxes";
 import Textarea from "../components/textarea";
 import Header from "../components/header";
-import Footer from "../components/footer";
 
 export default function Home() {
   const { day } = useParams();
-  const [date, setDate] = useState(
-    day || new Date().toISOString().split("T")[0],
-  );
+
+  const [date, setDate] = useState<string | null>(null);
 
   useEffect(() => {
     if (day) {
-      setDate(day);
+      // verify that the day is in the correct format
+      const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+      if (!dateRegex.test(day)) {
+        window.location.href = "/404";
+      } else {
+        setDate(day);
+      }
+    } else {
+      setDate(new Date().toISOString().split("T")[0]);
     }
   }, [day]);
 
   const resetState = () => {
+    if (!date) {
+      return;
+    }
+
     for (const inputComponent of initialInputComponents) {
       const key = getDatabaseKey(date, inputComponent.label);
       console.log("Attempting to remove", key);
@@ -52,6 +62,10 @@ export default function Home() {
     inputComponent: InputComponent,
     key: number,
   ) => {
+    if (!date) {
+      return null;
+    }
+
     switch (inputComponent.type) {
       case InputType.Textarea:
         if (!inputComponent.placeholder) {
@@ -85,12 +99,13 @@ export default function Home() {
   };
 
   return (
-    <div className="container mx-auto px-2">
-      <Header date={date} setDate={setDate} handleResetDay={handleResetDay} />
+    <>
+      {date && (
+        <Header date={date} setDate={setDate} handleResetDay={handleResetDay} />
+      )}
       {initialInputComponents.map((item, index) =>
         renderInputComponent(item, index),
       )}
-      <Footer />
-    </div>
+    </>
   );
 }

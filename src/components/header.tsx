@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import DateSelector from "./date-selector";
 import Hr from "./hr";
 
 interface HeaderProps {
-  date: string;
-  setDate: (date: string) => void;
-  handleResetDay: () => void;
+  date?: string;
+  setDate?: (date: string) => void;
+  handleResetDay?: () => void;
 }
 
 export default function Header({ date, setDate, handleResetDay }: HeaderProps) {
@@ -18,6 +18,10 @@ export default function Header({ date, setDate, handleResetDay }: HeaderProps) {
   };
 
   const handleDateChange = (newDate: string) => {
+    if (!setDate) {
+      return;
+    }
+
     setDate(newDate);
     navigate(`/${newDate}`);
   };
@@ -25,22 +29,33 @@ export default function Header({ date, setDate, handleResetDay }: HeaderProps) {
   return (
     <>
       <div className="flex justify-between mt-3 mx-2">
-        <h1 className="text-xl">☑️ notesforthe.day</h1>
-        <DateSelector value={date} onChange={handleDateChange} />
+        <h1 className="text-xl">
+          <Link to="/">☑️ notesforthe.day</Link>
+        </h1>
+        {setDate && date && (
+          <DateSelector value={date} onChange={handleDateChange} />
+        )}
         <button className="btn" onClick={toggleSettings}>
           ⚙️
         </button>
       </div>
-      <div
-        id="settings-menu"
-        className={`text-right transition-[max-height,padding] duration-300 ease-in-out overflow-hidden ${isSettingsVisible ? "max-h-24 py-2" : "max-h-0 py-0"}`}
-      >
-        <p>
-          <a href="#" className="underline" onClick={handleResetDay}>
-            Reset day
-          </a>
-        </p>
-      </div>
+
+      {setDate && (
+        <div
+          id="settings-menu"
+          className={`text-right transition-[max-height,padding] duration-300 ease-in-out overflow-hidden ${isSettingsVisible ? "max-h-24 py-2" : "max-h-0 py-0"}`}
+        >
+          <p className="underline">
+            <Link to="/edit-template">Edit template</Link>
+          </p>
+          <p>
+            <a href="#" className="underline" onClick={handleResetDay}>
+              Reset day
+            </a>
+          </p>
+        </div>
+      )}
+
       <Hr />
     </>
   );
