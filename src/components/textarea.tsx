@@ -25,7 +25,7 @@ export default function Textarea({
     <div className="mb-4">
       <p className="mb-1">{label}</p>
       <textarea
-        className="text-white bg-backgroundPrimaryDark shadow-lg p-3 w-full rounded border-gray-700"
+        className="text-foregroundPrimary bg-backgroundPrimaryDark shadow p-3 w-full rounded border-gray-700"
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}
