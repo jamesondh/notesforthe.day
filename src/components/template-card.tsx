@@ -15,6 +15,7 @@ interface TemplateCardProps {
   initialRows?: number;
   initialAddPlaceholder?: string;
   initialList?: string[];
+  handleRemoveInputComponent?: () => void;
 }
 
 export default function TemplateCard({
@@ -25,6 +26,7 @@ export default function TemplateCard({
   initialRows = 4,
   initialAddPlaceholder = "",
   initialList = [],
+  handleRemoveInputComponent,
 }: TemplateCardProps) {
   const [label, setLabel] = useState<string>(initialLabel);
   const [placeholderText, setPlaceholderText] =
@@ -89,7 +91,12 @@ export default function TemplateCard({
         <p className="text-xl">
           {inputType === InputType.Textarea ? "Text input" : "Checkbox input"}
         </p>
-        <button className="text-sm text-gray-500">Remove</button>
+        <button
+          className="text-sm text-gray-500"
+          onClick={handleRemoveInputComponent}
+        >
+          Remove
+        </button>
       </div>
       <p className="mt-2">Label</p>
       <InputText
@@ -101,6 +108,7 @@ export default function TemplateCard({
         value={label}
         onChange={setLabel}
         backgroundColor="bg-backgroundPrimaryDarker"
+        outline={label === ""}
       />
 
       {inputType === InputType.Textarea ? (
@@ -111,6 +119,7 @@ export default function TemplateCard({
             value={placeholderText}
             onChange={setPlaceholderText}
             backgroundColor="bg-backgroundPrimaryDarker"
+            outline={placeholderText === ""}
           />
           <p className="mt-2">Rows: {sliderValue}</p>
           <input
@@ -130,6 +139,7 @@ export default function TemplateCard({
             value={addPlaceholderText}
             onChange={setAddPlaceholderText}
             backgroundColor="bg-backgroundPrimaryDarker"
+            outline={addPlaceholderText === ""}
           />
           <p className="mt-2">Default items</p>
           <CheckboxesTemplate

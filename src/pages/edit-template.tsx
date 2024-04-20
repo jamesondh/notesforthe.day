@@ -66,6 +66,38 @@ export default function EditTemplate() {
     localStorage.setItem(getDatabaseTemplateKey(), JSON.stringify(template));
   };
 
+  const handleRemoveInputComponent = (index: number) => {
+    // remove the input component at the given index from the inputComponents state
+    const newInputComponents = inputComponents.filter((_, i) => i !== index);
+
+    // reindex the input components
+    newInputComponents.forEach((inputComponent, index) => {
+      inputComponent.index = index;
+    });
+    console.log("newInputComponents", newInputComponents);
+
+    // update the inputComponents state
+    setInputComponents(newInputComponents);
+
+    // remove the input component at the given index from the local storage
+    const templateFromDb = localStorage.getItem(getDatabaseTemplateKey());
+    if (!templateFromDb) return;
+    const template: InputComponent[] = JSON.parse(templateFromDb);
+
+    const newTemplate = template.filter((_, i) => i !== index);
+
+    // reindex the input components
+    newTemplate.forEach((inputComponent, index) => {
+      inputComponent.index = index;
+    });
+
+    // update the local storage
+    localStorage.setItem(getDatabaseTemplateKey(), JSON.stringify(newTemplate));
+
+    // TODO: we shouldn't reload the page here, but refreshing the input component state isn't quite working
+    window.location.reload();
+  };
+
   const renderTemplate = () => {
     return inputComponents.map((inputComponent, index) => {
       switch (inputComponent.type) {
@@ -78,6 +110,9 @@ export default function EditTemplate() {
               initialLabel={inputComponent.label}
               initialPlaceholder={inputComponent.placeholder}
               initialRows={inputComponent.rows}
+              handleRemoveInputComponent={() =>
+                handleRemoveInputComponent(index)
+              }
             />
           );
         case InputType.Checkbox:
@@ -89,6 +124,9 @@ export default function EditTemplate() {
               initialLabel={inputComponent.label}
               initialList={inputComponent.initialList}
               initialAddPlaceholder={inputComponent.addPlaceholder}
+              handleRemoveInputComponent={() =>
+                handleRemoveInputComponent(index)
+              }
             />
           );
         default:

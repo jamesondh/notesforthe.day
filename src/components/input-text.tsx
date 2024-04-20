@@ -6,6 +6,7 @@ interface InputTextProps {
   onChange: (value: string) => void;
   onKeyPress?: (value: string) => void;
   backgroundColor?: string;
+  outline?: boolean;
 }
 
 export default function InputText({
@@ -14,6 +15,7 @@ export default function InputText({
   onChange,
   onKeyPress,
   backgroundColor = "bg-backgroundPrimaryDark",
+  outline = false,
 }: InputTextProps) {
   return (
     <input
@@ -23,6 +25,7 @@ export default function InputText({
       className={classNames(
         "text-foregroundPrimary p-3 shadow w-full rounded",
         backgroundColor,
+        outline ? "border border-red-500" : "",
       )}
       onKeyPress={(e) => onKeyPress && onKeyPress(e.key)}
       onChange={(e) => onChange(e.target.value)}
