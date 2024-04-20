@@ -70,7 +70,7 @@ export default function Checkboxes({
       return;
     }
 
-    setList(reorder(list, result.source.index, result.destination.index));
+    setList([...reorder(list, result.source.index, result.destination.index)]);
   };
 
   return (

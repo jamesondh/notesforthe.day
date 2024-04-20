@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { getDatabaseTemplateKey } from "../utils";
 import { InputComponent, InputType } from "../types";
+import { CheckboxItem } from "../types";
 
 interface PushTemplateUpdateToDbProps {
   inputType: InputType;
@@ -9,7 +10,7 @@ interface PushTemplateUpdateToDbProps {
   placeholderText: string;
   addPlaceholderText: string;
   sliderValue: number;
-  list: string[];
+  list: CheckboxItem[];
 }
 
 // TODO: only push to db if value has changed
@@ -54,7 +55,7 @@ export default function PushTemplateUpdateToDb({
         break;
       case InputType.Checkbox:
         inputComponent.addPlaceholder = addPlaceholderText;
-        inputComponent.initialList = list;
+        inputComponent.initialList = list.map((item) => item.name);
         break;
     }
     // console.log("updated input component", inputComponent);

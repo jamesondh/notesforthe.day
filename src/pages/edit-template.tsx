@@ -48,8 +48,7 @@ export default function EditTemplate() {
       <div>
         <p className="my-8 text-center">
           Edit your daily template here. This template is only applied to new
-          days. Reset today's data or wait until tomorrow to see your updated
-          template.
+          days.
         </p>
         {renderTemplate()}
         <div className="flex justify-between my-6">

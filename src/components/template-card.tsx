@@ -3,6 +3,9 @@ import { InputType } from "../types";
 import InputText from "./input-text";
 import CheckboxesTemplate from "./checkboxes-template";
 import PushTemplateUpdateToDb from "../hooks/push-template-update-to-db";
+import { CheckboxItem } from "../types";
+import { DropResult } from "react-beautiful-dnd";
+import { reorder } from "../utils";
 
 interface TemplateCardProps {
   inputType: InputType;
@@ -30,7 +33,41 @@ export default function TemplateCard({
     initialAddPlaceholder,
   );
   const [sliderValue, setSliderValue] = useState<number>(initialRows);
-  const [list] = useState<string[]>(initialList);
+  const [list, setList] = useState<CheckboxItem[]>(() =>
+    initialList.map((item) => ({ name: item, checked: false })),
+  );
+  const [inputValue, setInputValue] = useState<string>("");
+
+  const handleRemoveItem = (itemName: string) => {
+    setList((prevState) => prevState.filter((item) => item.name !== itemName));
+  };
+
+  const handleAddItem = () => {
+    if (inputValue.trim() !== "") {
+      setList((prevList) => [
+        ...prevList,
+        { name: inputValue.trim(), checked: false },
+      ]);
+      setInputValue("");
+    }
+  };
+
+  const handleKeyPress = (key: string) => {
+    if (key === "Enter") {
+      handleAddItem();
+    }
+  };
+
+  const onDragEnd = (result: DropResult) => {
+    if (
+      !result.destination ||
+      result.destination.index === result.source.index
+    ) {
+      return;
+    }
+
+    setList([...reorder(list, result.source.index, result.destination.index)]);
+  };
 
   PushTemplateUpdateToDb({
     inputType,
@@ -96,8 +133,14 @@ export default function TemplateCard({
           />
           <p className="mt-2">Default items</p>
           <CheckboxesTemplate
-            initialList={list}
+            list={list}
             addPlaceholder={"Add new default item..."}
+            inputValue={inputValue}
+            handleRemoveItem={handleRemoveItem}
+            onDragEnd={onDragEnd}
+            setInputValue={setInputValue}
+            handleAddItem={handleAddItem}
+            handleKeyPress={handleKeyPress}
           />
         </>
       )}
