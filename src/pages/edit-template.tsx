@@ -3,6 +3,7 @@ import Header from "../components/header";
 import TemplateCard from "../components/template-card";
 import { InputType, InputComponent } from "../types";
 import LoadOrInitializeTemplate from "../hooks/load-or-initialize-template";
+import { handleResetTemplate } from "../utils";
 
 export default function EditTemplate() {
   const [inputComponents, setInputComponents] = useState<InputComponent[]>([]);
@@ -44,7 +45,7 @@ export default function EditTemplate() {
 
   return (
     <>
-      <Header />
+      <Header handleResetTemplate={handleResetTemplate} />
       <div>
         <p className="my-8 text-center">
           Edit your daily template here. This template is only applied to new

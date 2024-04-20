@@ -24,3 +24,27 @@ export function reorder(
 
   return result;
 }
+
+export function handleResetDay(date: string | null): void {
+  if (!date) {
+    return;
+  }
+  const confirmReset = window.confirm(
+    "Are you sure you want to reset all of today's notes?",
+  );
+  if (confirmReset) {
+    localStorage.removeItem(getDatabaseDateKey(date));
+    localStorage.removeItem(getDatabaseDateTemplateKey(date));
+    window.location.reload();
+  }
+}
+
+export function handleResetTemplate(): void {
+  const confirmReset = window.confirm(
+    "Are you sure you want to reset your daily template to the default?",
+  );
+  if (confirmReset) {
+    localStorage.removeItem(getDatabaseTemplateKey());
+    window.location.reload();
+  }
+}

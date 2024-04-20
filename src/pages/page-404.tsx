@@ -8,7 +8,7 @@ export default function Page404() {
         <p>404 - Page Not Found</p>
         <p>
           <a className="underline" href="/">
-            Go Home
+            Go to today
           </a>
         </p>
       </div>

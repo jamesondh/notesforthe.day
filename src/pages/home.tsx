@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { InputType, InputComponent } from "../types";
-import { getDatabaseDateKey, getDatabaseDateTemplateKey } from "../utils";
+import { handleResetDay } from "../utils";
 import Checkboxes from "../components/checkboxes";
 import Textarea from "../components/textarea";
 import Header from "../components/header";
@@ -31,24 +31,6 @@ export default function Home() {
       setDate(new Date().toISOString().split("T")[0]);
     }
   }, [day]);
-
-  const resetState = () => {
-    if (!date) {
-      return;
-    }
-    localStorage.removeItem(getDatabaseDateKey(date));
-    localStorage.removeItem(getDatabaseDateTemplateKey(date));
-    window.location.reload();
-  };
-
-  const handleResetDay = () => {
-    const confirmReset = window.confirm(
-      "Are you sure you want to reset all of today's notes?",
-    );
-    if (confirmReset) {
-      resetState();
-    }
-  };
 
   const renderInputComponent = (
     inputComponent: InputComponent,
