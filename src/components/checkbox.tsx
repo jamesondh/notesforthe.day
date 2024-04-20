@@ -26,7 +26,9 @@ export default function Checkbox({
         <div
           className={classNames(
             "rounded my-1 py-3 shadow",
-            itemBackground(item.checked),
+            handleCheckboxChange
+              ? itemBackground(item.checked)
+              : "bg-backgroundPrimaryDarker",
           )}
           key={item.name}
           ref={provided.innerRef}

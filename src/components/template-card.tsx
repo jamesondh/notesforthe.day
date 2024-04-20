@@ -17,7 +17,7 @@ export default function TemplateCard({ inputType }: TemplateCardProps) {
   };
 
   return (
-    <div className="bg-backgroundPrimaryDarker rounded-lg shadow-lg p-4 mb-2">
+    <div className="bg-backgroundPrimaryDark rounded-lg shadow-lg p-4 mb-2">
       <div className="flex justify-between items-center">
         <p className="text-xl">
           {inputType === InputType.Textarea ? "Text input" : "Checkbox input"}
@@ -34,6 +34,7 @@ export default function TemplateCard({ inputType }: TemplateCardProps) {
         value={label}
         onChange={setLabel}
         onKeyPress={handleKeyPress}
+        backgroundColor="bg-backgroundPrimaryDarker"
       />
 
       {inputType === InputType.Textarea ? (
@@ -44,6 +45,7 @@ export default function TemplateCard({ inputType }: TemplateCardProps) {
             value={label}
             onChange={setLabel}
             onKeyPress={handleKeyPress}
+            backgroundColor="bg-backgroundPrimaryDarker"
           />
           <p className="mt-2">Rows</p>
           <input
@@ -62,6 +64,7 @@ export default function TemplateCard({ inputType }: TemplateCardProps) {
             value={label}
             onChange={setLabel}
             onKeyPress={handleKeyPress}
+            backgroundColor="bg-backgroundPrimaryDarker"
           />
           <p className="mt-2">Default items</p>
           <CheckboxesTemplate
