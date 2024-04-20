@@ -1,7 +1,12 @@
 import { CheckboxItem } from "./types";
+import { DATABASE_PREFIX } from "./constants";
 
 export function getDatabaseKey(date: string, label: string) {
-  return `dailies-${date}-${label}`;
+  return `${DATABASE_PREFIX}-${date}-${label}`;
+}
+
+export function getDatabaseTemplateKey() {
+  return `${DATABASE_PREFIX}-template`;
 }
 
 export function reorder(

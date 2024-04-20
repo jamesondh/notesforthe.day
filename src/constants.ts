@@ -1,6 +1,8 @@
 import { InputType, InputComponent } from "./types";
 
-export const initialInputComponents: InputComponent[] = [
+export const DATABASE_PREFIX = "dailies";
+
+export const INITIAL_TEMPLATE: InputComponent[] = [
   {
     type: InputType.Textarea,
     label: "What's on my mind this morning?",
@@ -15,7 +17,7 @@ export const initialInputComponents: InputComponent[] = [
   },
   {
     type: InputType.Textarea,
-    label: "What am I excited about today",
+    label: "What am I excited about today?",
     placeholder:
       "What events am I looking forward to? What recent hobbies or things am I passionate about?",
     rows: 2,

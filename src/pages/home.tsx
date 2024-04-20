@@ -1,16 +1,22 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { initialInputComponents } from "../constants";
+import { INITIAL_TEMPLATE } from "../constants";
 import { InputType, InputComponent } from "../types";
 import { getDatabaseKey } from "../utils";
 import Checkboxes from "../components/checkboxes";
 import Textarea from "../components/textarea";
 import Header from "../components/header";
+import LoadOrInitializeTemplate from "../hooks/load-or-initialize-template";
 
 export default function Home() {
   const { day } = useParams();
 
   const [date, setDate] = useState<string | null>(null);
+  const [inputComponents, setInputComponents] = useState<InputComponent[]>([]);
+
+  LoadOrInitializeTemplate({
+    setValue: setInputComponents,
+  });
 
   useEffect(() => {
     if (day) {
@@ -31,7 +37,7 @@ export default function Home() {
       return;
     }
 
-    for (const inputComponent of initialInputComponents) {
+    for (const inputComponent of inputComponents) {
       const key = getDatabaseKey(date, inputComponent.label);
       console.log("Attempting to remove", key);
       switch (inputComponent.type) {
@@ -103,9 +109,7 @@ export default function Home() {
       {date && (
         <Header date={date} setDate={setDate} handleResetDay={handleResetDay} />
       )}
-      {initialInputComponents.map((item, index) =>
-        renderInputComponent(item, index),
-      )}
+      {INITIAL_TEMPLATE.map((item, index) => renderInputComponent(item, index))}
     </>
   );
 }

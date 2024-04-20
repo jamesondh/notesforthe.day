@@ -5,13 +5,29 @@ import CheckboxesTemplate from "./checkboxes-template";
 
 interface TemplateCardProps {
   inputType: InputType;
+  initialLabel?: string;
+  initialPlaceholder?: string;
+  initialRows?: number;
+  initialAddPlaceholder?: string;
+  initialList?: string[];
 }
 
-export default function TemplateCard({ inputType }: TemplateCardProps) {
-  const [label, setLabel] = useState<string>("");
-  const [placeholderText, setPlaceholderText] = useState<string>("");
-  const [addPlaceholderText, setAddPlaceholderText] = useState<string>("");
-  const [sliderValue, setSliderValue] = useState<number>(4);
+export default function TemplateCard({
+  inputType,
+  initialLabel = "",
+  initialPlaceholder = "",
+  initialRows = 4,
+  initialAddPlaceholder = "",
+  initialList = [],
+}: TemplateCardProps) {
+  const [label, setLabel] = useState<string>(initialLabel);
+  const [placeholderText, setPlaceholderText] =
+    useState<string>(initialPlaceholder);
+  const [addPlaceholderText, setAddPlaceholderText] = useState<string>(
+    initialAddPlaceholder,
+  );
+  const [sliderValue, setSliderValue] = useState<number>(initialRows);
+  const [list, _setList] = useState<string[]>(initialList);
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSliderValue(parseInt(event.target.value));
@@ -67,7 +83,7 @@ export default function TemplateCard({ inputType }: TemplateCardProps) {
           />
           <p className="mt-2">Default items</p>
           <CheckboxesTemplate
-            initialList={["my", "initial", "list"]}
+            initialList={list}
             addPlaceholder={"Add new default item..."}
           />
         </>
