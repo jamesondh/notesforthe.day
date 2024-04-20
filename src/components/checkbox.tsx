@@ -35,24 +35,28 @@ export default function Checkbox({
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <label className="flex justify-between" key={item.name}>
-            <div className="ml-4 flex justify-between">
-              {handleCheckboxChange && (
-                <input
-                  type="checkbox"
-                  checked={item.checked}
-                  onChange={() => handleCheckboxChange(item.name)}
-                  className="h-full mr-3 mb-2"
-                />
-              )}
-              <p
-                style={{
-                  textDecoration: itemStrikethrough(item.checked),
-                }}
-              >
-                {item.name}
-              </p>
-            </div>
+          <div className="flex justify-between">
+            <label className="flex-1" key={item.name}>
+              <div className="ml-4 flex">
+                {handleCheckboxChange && (
+                  <div className="align-middle">
+                    <input
+                      type="checkbox"
+                      checked={item.checked}
+                      onChange={() => handleCheckboxChange(item.name)}
+                      className="h-full mr-3 mb-2"
+                    />
+                  </div>
+                )}
+                <p
+                  style={{
+                    textDecoration: itemStrikethrough(item.checked),
+                  }}
+                >
+                  {item.name}
+                </p>
+              </div>
+            </label>
             <div>
               <button
                 className="mr-1 md:mr-4 text-sm text-gray-500 px-2 h-full"
@@ -61,7 +65,7 @@ export default function Checkbox({
                 Remove
               </button>
             </div>
-          </label>
+          </div>
         </div>
       )}
     </Draggable>

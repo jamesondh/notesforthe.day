@@ -9,11 +9,12 @@ interface TemplateCardProps {
 
 export default function TemplateCard({ inputType }: TemplateCardProps) {
   const [label, setLabel] = useState<string>("");
+  const [placeholderText, setPlaceholderText] = useState<string>("");
+  const [addPlaceholderText, setAddPlaceholderText] = useState<string>("");
+  const [sliderValue, setSliderValue] = useState<number>(4);
 
-  const handleKeyPress = (key: string) => {
-    if (key === "Enter") {
-      console.log("Enter key pressed");
-    }
+  const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSliderValue(parseInt(event.target.value));
   };
 
   return (
@@ -33,7 +34,6 @@ export default function TemplateCard({ inputType }: TemplateCardProps) {
         }
         value={label}
         onChange={setLabel}
-        onKeyPress={handleKeyPress}
         backgroundColor="bg-backgroundPrimaryDarker"
       />
 
@@ -42,18 +42,18 @@ export default function TemplateCard({ inputType }: TemplateCardProps) {
           <p className="mt-2">Placeholder text</p>
           <InputText
             placeholder="Type placeholder text here..."
-            value={label}
-            onChange={setLabel}
-            onKeyPress={handleKeyPress}
+            value={placeholderText}
+            onChange={setPlaceholderText}
             backgroundColor="bg-backgroundPrimaryDarker"
           />
-          <p className="mt-2">Rows</p>
+          <p className="mt-2">Rows: {sliderValue}</p>
           <input
             className="w-full"
             type="range"
             min="1"
-            max="20"
-            value="4"
+            max="10"
+            value={sliderValue}
+            onChange={handleSliderChange}
           ></input>
         </>
       ) : (
@@ -61,9 +61,8 @@ export default function TemplateCard({ inputType }: TemplateCardProps) {
           <p className="mt-2">Placeholder text for add item</p>
           <InputText
             placeholder="Type placeholder text for add item here..."
-            value={label}
-            onChange={setLabel}
-            onKeyPress={handleKeyPress}
+            value={addPlaceholderText}
+            onChange={setAddPlaceholderText}
             backgroundColor="bg-backgroundPrimaryDarker"
           />
           <p className="mt-2">Default items</p>
