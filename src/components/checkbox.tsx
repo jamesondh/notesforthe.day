@@ -59,7 +59,7 @@ export default function Checkbox({
             </label>
             <div>
               <button
-                className="mr-1 md:mr-4 text-sm text-gray-500 px-2 h-full"
+                className="mr-1 md:mr-4 text-sm text-foregroundSecondary px-2 h-full"
                 onClick={() => handleRemoveItem(item.name)}
               >
                 Remove

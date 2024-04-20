@@ -92,7 +92,7 @@ export default function TemplateCard({
           {inputType === InputType.Textarea ? "Text input" : "Checkbox input"}
         </p>
         <button
-          className="text-sm text-gray-500"
+          className="text-sm text-foregroundSecondary"
           onClick={handleRemoveInputComponent}
         >
           Remove

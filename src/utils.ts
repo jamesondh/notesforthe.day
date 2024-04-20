@@ -48,3 +48,14 @@ export function handleResetTemplate(): void {
     window.location.reload();
   }
 }
+
+export function getTheme(): string {
+  const storedTheme = localStorage.getItem("theme");
+  if (storedTheme) {
+    return storedTheme;
+  }
+
+  return window.matchMedia("(prefers-color-scheme: dark)").matches
+    ? "dark"
+    : "light";
+}

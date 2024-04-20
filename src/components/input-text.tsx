@@ -23,7 +23,7 @@ export default function InputText({
       value={value}
       placeholder={placeholder}
       className={classNames(
-        "text-foregroundPrimary p-3 shadow w-full rounded",
+        "text-foregroundPrimary placeholder:text-foregroundSecondary p-3 shadow w-full rounded",
         backgroundColor,
         outline ? "border border-red-500" : "",
       )}
