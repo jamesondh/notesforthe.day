@@ -18,6 +18,7 @@ export default function EditTemplate() {
           return (
             <TemplateCard
               key={index}
+              index={index}
               inputType={InputType.Textarea}
               initialLabel={inputComponent.label}
               initialPlaceholder={inputComponent.placeholder}
@@ -28,6 +29,7 @@ export default function EditTemplate() {
           return (
             <TemplateCard
               key={index}
+              index={index}
               inputType={InputType.Checkbox}
               initialLabel={inputComponent.label}
               initialList={inputComponent.initialList}
@@ -44,11 +46,11 @@ export default function EditTemplate() {
     <>
       <Header />
       <div>
-        <p className="mb-10 mt-8 text-center">
-          Under construction! Doesn't work yet 😅
+        <p className="my-8 text-center">
+          Edit your daily template here. This template is only applied to new
+          days. Reset today's data or wait until tomorrow to see your updated
+          template.
         </p>
-        {/* <TemplateCard inputType={InputType.Textarea} />
-        <TemplateCard inputType={InputType.Checkbox} /> */}
         {renderTemplate()}
         <div className="flex justify-between my-6">
           <button className="w-full btn bg-backgroundPrimaryDark rounded p-3 mr-1 shadow-lg">

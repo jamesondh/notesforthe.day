@@ -15,7 +15,6 @@ export default function CheckboxesTemplate({
   addPlaceholder,
 }: CheckboxesProps) {
   const [inputValue, setInputValue] = useState<string>("");
-  // TODO: load or initialize template
   const [list, setList] = useState<CheckboxItem[]>(
     initialList.map((item) => ({ name: item, checked: false })),
   );

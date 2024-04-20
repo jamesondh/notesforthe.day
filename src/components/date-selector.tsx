@@ -11,7 +11,7 @@ export default function DateSelector({ value, onChange }: DateSelectorProps) {
         type="date"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="text-foregroundPrimary bg-backgroundPrimary"
+        className="text-foregroundPrimary bg-backgroundPrimary h-full"
         style={{ colorScheme: "dark" }} // TODO: match theme
       />
     </div>

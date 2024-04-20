@@ -1,11 +1,15 @@
 import { CheckboxItem } from "./types";
 import { DATABASE_PREFIX } from "./constants";
 
-export function getDatabaseKey(date: string, label: string) {
-  return `${DATABASE_PREFIX}-${date}-${label}`;
+export function getDatabaseDateKey(date: string): string {
+  return `${DATABASE_PREFIX}-${date}`;
 }
 
-export function getDatabaseTemplateKey() {
+export function getDatabaseDateTemplateKey(date: string): string {
+  return `${DATABASE_PREFIX}-${date}-template`;
+}
+
+export function getDatabaseTemplateKey(): string {
   return `${DATABASE_PREFIX}-template`;
 }
 

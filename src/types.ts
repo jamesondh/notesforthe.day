@@ -9,6 +9,7 @@ export enum InputType {
 }
 
 export interface InputComponent {
+  index: number;
   type: InputType;
   label: string;
   placeholder?: string;

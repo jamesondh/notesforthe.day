@@ -2,9 +2,11 @@ import { useState } from "react";
 import { InputType } from "../types";
 import InputText from "./input-text";
 import CheckboxesTemplate from "./checkboxes-template";
+import PushTemplateUpdateToDb from "../hooks/push-template-update-to-db";
 
 interface TemplateCardProps {
   inputType: InputType;
+  index: number;
   initialLabel?: string;
   initialPlaceholder?: string;
   initialRows?: number;
@@ -14,6 +16,7 @@ interface TemplateCardProps {
 
 export default function TemplateCard({
   inputType,
+  index,
   initialLabel = "",
   initialPlaceholder = "",
   initialRows = 4,
@@ -27,7 +30,17 @@ export default function TemplateCard({
     initialAddPlaceholder,
   );
   const [sliderValue, setSliderValue] = useState<number>(initialRows);
-  const [list, _setList] = useState<string[]>(initialList);
+  const [list] = useState<string[]>(initialList);
+
+  PushTemplateUpdateToDb({
+    inputType,
+    index,
+    label,
+    placeholderText,
+    addPlaceholderText,
+    sliderValue,
+    list,
+  });
 
   const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSliderValue(parseInt(event.target.value));

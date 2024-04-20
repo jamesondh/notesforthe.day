@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { INITIAL_TEMPLATE } from "../constants";
 import { InputType, InputComponent } from "../types";
-import { getDatabaseKey } from "../utils";
+import { getDatabaseDateKey, getDatabaseDateTemplateKey } from "../utils";
 import Checkboxes from "../components/checkboxes";
 import Textarea from "../components/textarea";
 import Header from "../components/header";
@@ -15,6 +14,7 @@ export default function Home() {
   const [inputComponents, setInputComponents] = useState<InputComponent[]>([]);
 
   LoadOrInitializeTemplate({
+    date,
     setValue: setInputComponents,
   });
 
@@ -36,22 +36,8 @@ export default function Home() {
     if (!date) {
       return;
     }
-
-    for (const inputComponent of inputComponents) {
-      const key = getDatabaseKey(date, inputComponent.label);
-      console.log("Attempting to remove", key);
-      switch (inputComponent.type) {
-        case InputType.Textarea:
-          localStorage.removeItem(key);
-          break;
-        case InputType.Checkbox:
-          localStorage.removeItem(key);
-          break;
-        default:
-          break;
-      }
-    }
-    // TODO: trigger a re-render of input components instead of reloading the page
+    localStorage.removeItem(getDatabaseDateKey(date));
+    localStorage.removeItem(getDatabaseDateTemplateKey(date));
     window.location.reload();
   };
 
@@ -109,7 +95,7 @@ export default function Home() {
       {date && (
         <Header date={date} setDate={setDate} handleResetDay={handleResetDay} />
       )}
-      {INITIAL_TEMPLATE.map((item, index) => renderInputComponent(item, index))}
+      {inputComponents.map((item, index) => renderInputComponent(item, index))}
     </>
   );
 }
