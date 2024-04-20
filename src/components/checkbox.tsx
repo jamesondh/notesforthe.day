@@ -5,7 +5,7 @@ import { Draggable } from "react-beautiful-dnd";
 interface CheckboxProps {
   item: CheckboxItem;
   index: number;
-  handleCheckboxChange: (itemName: string) => void;
+  handleCheckboxChange?: (itemName: string) => void;
   handleRemoveItem: (itemName: string) => void;
 }
 
@@ -35,12 +35,14 @@ export default function Checkbox({
         >
           <label className="flex justify-between" key={item.name}>
             <div className="ml-4 flex justify-between">
-              <input
-                type="checkbox"
-                checked={item.checked}
-                onChange={() => handleCheckboxChange(item.name)}
-                className="h-full mr-3 mb-2"
-              />
+              {handleCheckboxChange && (
+                <input
+                  type="checkbox"
+                  checked={item.checked}
+                  onChange={() => handleCheckboxChange(item.name)}
+                  className="h-full mr-3 mb-2"
+                />
+              )}
               <p
                 style={{
                   textDecoration: itemStrikethrough(item.checked),

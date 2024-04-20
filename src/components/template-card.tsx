@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { InputType } from "../types";
 import InputText from "./input-text";
-import Checkboxes from "./checkboxes";
+import CheckboxesTemplate from "./checkboxes-template";
 
 interface TemplateCardProps {
   inputType: InputType;
@@ -64,9 +64,7 @@ export default function TemplateCard({ inputType }: TemplateCardProps) {
             onKeyPress={handleKeyPress}
           />
           <p className="mt-2">Default items</p>
-          <Checkboxes
-            label={"Make this label optional!"}
-            date={"2025-01-01"}
+          <CheckboxesTemplate
             initialList={["my", "initial", "list"]}
             addPlaceholder={"Add new default item..."}
           />

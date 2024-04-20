@@ -1,46 +1,24 @@
 import { useState } from "react";
 import InputText from "./input-text";
 import CheckboxesCore from "./checkboxes-core";
-import LoadOrInitializeData from "../hooks/load-or-initialize-data";
-import PushUpdateToDb from "../hooks/push-update-to-db";
 import { CheckboxItem } from "../types";
 import { DropResult } from "react-beautiful-dnd";
 import { reorder } from "../utils";
 
 interface CheckboxesProps {
-  label: string;
-  date: string;
   initialList: string[];
   addPlaceholder: string;
 }
 
-export default function Checkboxes({
-  label,
-  date,
+export default function CheckboxesTemplate({
   initialList,
   addPlaceholder,
 }: CheckboxesProps) {
   const [inputValue, setInputValue] = useState<string>("");
-  const [list, setList] = useState<CheckboxItem[]>([]);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
-  LoadOrInitializeData({
-    date,
-    label,
-    initialValue: initialList.map((item) => ({ name: item, checked: false })),
-    setValue: setList,
-    setIsLoaded,
-  });
-
-  PushUpdateToDb({ date, label, isLoaded, value: list });
-
-  const handleCheckboxChange = (itemName: string) => {
-    setList((prevState) =>
-      prevState.map((item) =>
-        item.name === itemName ? { ...item, checked: !item.checked } : item,
-      ),
-    );
-  };
+  // TODO: load or initialize template
+  const [list, setList] = useState<CheckboxItem[]>(
+    initialList.map((item) => ({ name: item, checked: false })),
+  );
 
   const handleRemoveItem = (itemName: string) => {
     setList((prevState) => prevState.filter((item) => item.name !== itemName));
@@ -74,11 +52,9 @@ export default function Checkboxes({
   };
 
   return (
-    <div className="mb-5">
-      <p>{label}</p>
+    <div>
       <CheckboxesCore
         list={list}
-        handleCheckboxChange={handleCheckboxChange}
         handleRemoveItem={handleRemoveItem}
         onDragEnd={onDragEnd}
       />
