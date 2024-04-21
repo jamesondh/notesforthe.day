@@ -7,6 +7,7 @@ import Textarea from "../components/textarea";
 import Header from "../components/header";
 import Tabs from "../components/tabs";
 import LoadOrInitializeTemplate from "../hooks/load-or-initialize-template";
+import { getDatabaseDateKey } from "../utils";
 
 export default function Home() {
   const { day } = useParams();
@@ -73,6 +74,60 @@ export default function Home() {
     }
   };
 
+  const inputComponentsToMarkdown = () => {
+    if (!date) {
+      return null;
+    }
+
+    // today is an array of {label: string, value: any}
+    const today = localStorage.getItem(getDatabaseDateKey(date));
+    if (!today) {
+      return null;
+    }
+
+    // add today's date as a header
+    let markdown = `# ${date}\n\n`;
+
+    for (const inputComponent of inputComponents) {
+      // add the inputComponent label as a header
+      markdown += `## ${inputComponent.label}\n\n`;
+
+      // find the element in today that corresponds to this inputComponent
+      const element = JSON.parse(today).find(
+        (item: { label: string }) => item.label === inputComponent.label,
+      );
+
+      // continue if the value is empty
+      if (!element || !element.value) {
+        continue;
+      }
+
+      // render text as-is, and checkboxes as a markdown todo list
+      switch (inputComponent.type) {
+        case InputType.Textarea:
+          markdown += `${element.value}\n\n`;
+          break;
+        case InputType.Checkbox:
+          // continue if the value is empty
+          if (!element.value.length) {
+            break;
+          }
+
+          // create a checkbox list for each item
+          for (const item of element.value) {
+            markdown += `- [${item.checked ? "x" : " "}] ${item.name}\n`;
+          }
+          markdown += "\n";
+          break;
+        default:
+          break;
+      }
+    }
+
+    console.log(markdown);
+    return markdown;
+  };
+
   return (
     <>
       {date && (
@@ -81,17 +136,21 @@ export default function Home() {
       <Tabs
         tabsData={[
           {
-            label: "Edit view",
+            label: "Edit",
             content: inputComponents.map((item, index) =>
               renderInputComponent(item, index),
             ),
           },
           {
-            label: "Print view",
-            content: <p className="text-center mt-2">Coming soon! 😉</p>,
+            label: "View",
+            content: (
+              <div className="p-4 bg-backgroundPrimaryDark mt-2">
+                <code>{inputComponentsToMarkdown()}</code>
+              </div>
+            ),
           },
           {
-            label: "Calendar view",
+            label: "Calendar",
             content: <p className="text-center mt-2">Coming soon! 😉</p>,
           },
         ]}

@@ -1,12 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { TabData } from "../types";
+import { getActiveTab, setActiveTab } from "../utils";
 
 interface TabsProps {
   tabsData: TabData[];
 }
 
 export default function Tabs({ tabsData }: TabsProps) {
-  const [activeTabIndex, setActiveTabIndex] = useState(0);
+  const [activeTabIndex, setActiveTabIndex] = useState(getActiveTab());
   const [tabUnderlineWidth, setTabUnderlineWidth] = useState(0);
   const [tabUnderlineLeft, setTabUnderlineLeft] = useState(0);
 
@@ -20,13 +21,14 @@ export default function Tabs({ tabsData }: TabsProps) {
     }
 
     setTabPosition();
+    setActiveTab(activeTabIndex);
     window.addEventListener("resize", setTabPosition);
 
     return () => window.removeEventListener("resize", setTabPosition);
   }, [activeTabIndex]);
 
   return (
-    <div>
+    <div className="mt-3">
       <div className="relative">
         <div className="flex space-x-3 border-b border-backgroundPrimaryDark">
           {tabsData.map((tab, idx) => {

@@ -59,3 +59,16 @@ export function getTheme(): string {
     ? "dark"
     : "light";
 }
+
+export function getActiveTab(): number {
+  const storedActiveTab = localStorage.getItem("activeTab");
+  if (storedActiveTab) {
+    return parseInt(storedActiveTab);
+  }
+
+  return 0;
+}
+
+export function setActiveTab(index: number): void {
+  localStorage.setItem("activeTab", index.toString());
+}
