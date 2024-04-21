@@ -36,10 +36,10 @@ export default function CheckboxesTemplate({
           value={inputValue}
           onChange={(e) => setInputValue(e)}
           onKeyPress={handleKeyPress}
-          backgroundColor="bg-backgroundPrimaryDarker"
+          backgroundColor="bg-backgroundPrimary"
         />
         <button
-          className="ml-1 btn bg-backgroundPrimaryDarker rounded px-6 shadow"
+          className="ml-1 btn bg-backgroundPrimary rounded px-6 shadow"
           onClick={handleAddItem}
         >
           Add

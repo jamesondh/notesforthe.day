@@ -28,7 +28,7 @@ export default function Checkbox({
             "rounded my-1 py-3 shadow",
             handleCheckboxChange
               ? itemBackground(item.checked)
-              : "bg-backgroundPrimaryDarker",
+              : "bg-backgroundPrimary",
           )}
           key={item.name}
           ref={provided.innerRef}

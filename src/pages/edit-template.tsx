@@ -140,8 +140,8 @@ export default function EditTemplate() {
       <Header handleResetTemplate={handleResetTemplate} />
       <div>
         <p className="my-8 text-center">
-          Edit your daily template here. This template is only applied to new
-          days.
+          Edit your daily template here. This template is only applied to new or
+          reset days.
         </p>
         {renderTemplate()}
         <div className="flex justify-between my-4">
@@ -149,13 +149,13 @@ export default function EditTemplate() {
             className="w-full btn bg-backgroundPrimaryDark rounded p-3 mr-1 shadow-lg"
             onClick={handleAddTextInput}
           >
-            Add text input
+            Add text section
           </button>
           <button
             className="w-full btn bg-backgroundPrimaryDark rounded p-3 ml-1 shadow-lg"
             onClick={handleAddCheckboxInput}
           >
-            Add checkbox input
+            Add checkboxes section
           </button>
         </div>
       </div>

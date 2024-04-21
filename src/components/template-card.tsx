@@ -89,7 +89,7 @@ export default function TemplateCard({
     <div className="bg-backgroundPrimaryDark rounded-lg shadow-lg p-4 mb-2">
       <div className="flex justify-between items-center">
         <p className="text-xl">
-          {inputType === InputType.Textarea ? "Text input" : "Checkbox input"}
+          {inputType === InputType.Textarea ? "Text" : "Checkboxes"}
         </p>
         <button
           className="text-sm text-foregroundSecondary"
@@ -107,7 +107,7 @@ export default function TemplateCard({
         }
         value={label}
         onChange={setLabel}
-        backgroundColor="bg-backgroundPrimaryDarker"
+        backgroundColor="bg-backgroundPrimary"
         outline={label === ""}
       />
 
@@ -118,7 +118,7 @@ export default function TemplateCard({
             placeholder="Type placeholder text here..."
             value={placeholderText}
             onChange={setPlaceholderText}
-            backgroundColor="bg-backgroundPrimaryDarker"
+            backgroundColor="bg-backgroundPrimary"
             outline={placeholderText === ""}
           />
           <p className="mt-2">Rows: {sliderValue}</p>
@@ -138,7 +138,7 @@ export default function TemplateCard({
             placeholder="Type placeholder text for add item here..."
             value={addPlaceholderText}
             onChange={setAddPlaceholderText}
-            backgroundColor="bg-backgroundPrimaryDarker"
+            backgroundColor="bg-backgroundPrimary"
             outline={addPlaceholderText === ""}
           />
           <p className="mt-2">Default items</p>

@@ -57,9 +57,12 @@ export default function Header({
   return (
     <div className="mb-4">
       <div className="flex justify-between mt-3 mx-2">
-        <h1 className="text-xl">
-          <Link to="/">☑️ NotesForThe.Day</Link>
-        </h1>
+        <div>
+          <h1 className="text-2xl zilla-slab">
+            <Link to="/">NotesForThe.Day</Link>
+          </h1>
+          <p className="text-xs">Your daily organizer</p>
+        </div>
         {setDate && date && (
           <DateSelector value={date} onChange={handleDateChange} />
         )}
