@@ -36,7 +36,7 @@ export default function Tabs({ tabsData }: TabsProps) {
   };
 
   return (
-    <div className="mt-3">
+    <div>
       <div className="relative">
         <div className="flex space-x-3 border-b border-backgroundPrimaryDark">
           {tabsData.map((tab, idx) => (

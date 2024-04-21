@@ -6,6 +6,7 @@ import Checkboxes from "../components/checkboxes";
 import Textarea from "../components/textarea";
 import Header from "../components/header";
 import Tabs from "../components/tabs";
+import Schedule from "../components/schedule";
 import LoadOrInitializeTemplate from "../hooks/load-or-initialize-template";
 import { getDatabaseDateKey } from "../utils";
 import Markdown from "markdown-to-jsx";
@@ -159,7 +160,7 @@ export default function Home() {
           },
           {
             label: "Calendar",
-            content: <p className="text-center mt-2 mb-8">Coming soon! 😉</p>,
+            content: <Schedule />,
           },
         ]}
       />

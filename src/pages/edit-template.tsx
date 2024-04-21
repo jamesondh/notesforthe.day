@@ -146,13 +146,13 @@ export default function EditTemplate() {
         {renderTemplate()}
         <div className="flex justify-between my-4">
           <button
-            className="w-full btn bg-backgroundPrimaryDark rounded p-3 mr-1 shadow-lg"
+            className="w-full btn bg-backgroundPrimaryDark rounded p-3 mr-1 shadow"
             onClick={handleAddTextInput}
           >
             Add text section
           </button>
           <button
-            className="w-full btn bg-backgroundPrimaryDark rounded p-3 ml-1 shadow-lg"
+            className="w-full btn bg-backgroundPrimaryDark rounded p-3 ml-1 shadow"
             onClick={handleAddCheckboxInput}
           >
             Add checkboxes section

@@ -86,7 +86,7 @@ export default function TemplateCard({
   };
 
   return (
-    <div className="bg-backgroundPrimaryDark rounded-lg shadow-lg p-4 mb-2">
+    <div className="bg-backgroundPrimaryDark rounded-lg shadow p-4 mb-2">
       <div className="flex justify-between items-center">
         <p className="text-xl">
           {inputType === InputType.Textarea ? "Text" : "Checkboxes"}

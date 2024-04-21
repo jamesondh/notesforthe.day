@@ -4,7 +4,7 @@
 
 body {
   @apply text-foregroundPrimary bg-backgroundPrimary;
-  font-family: "Noto Sans", sans-serif;
+  font-family: "Inter", sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;

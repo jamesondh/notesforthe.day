@@ -61,23 +61,23 @@ export default function Header({
           <h1 className="text-2xl zilla-slab">
             <Link to="/">NotesForThe.Day</Link>
           </h1>
-          <p className="text-xs">Your daily organizer</p>
         </div>
         {setDate && date && (
           <DateSelector value={date} onChange={handleDateChange} />
         )}
-        <button className="btn" onClick={toggleSettings}>
-          ⚙️
-        </button>
+        <div>
+          <button className="btn mr-2" onClick={changeTheme}>
+            {theme === "dark" ? "🌞" : "🌙"}
+          </button>
+          <button className="btn" onClick={toggleSettings}>
+            ⚙️
+          </button>
+        </div>
       </div>
 
       <div
         className={`text-right transition-[max-height,padding] duration-300 ease-in-out overflow-hidden ${isSettingsVisible ? "max-h-24 py-2" : "max-h-0 py-0"}`}
       >
-        <p className="underline cursor-pointer">
-          <a onClick={changeTheme}>Toggle theme</a>
-        </p>
-
         {/* show link to "edit template" page and "reset day" if on home page */}
         {setDate && (
           <>
@@ -98,11 +98,16 @@ export default function Header({
 
         {/* show "reset template" if on edit template page */}
         {handleResetTemplate && (
-          <p>
-            <a href="#" className="underline" onClick={handleResetTemplate}>
-              Reset template
-            </a>
-          </p>
+          <>
+            <p className="underline">
+              <Link to="/">Go to today</Link>
+            </p>
+            <p>
+              <a href="#" className="underline" onClick={handleResetTemplate}>
+                Reset template
+              </a>
+            </p>
+          </>
         )}
       </div>
 
