@@ -15,3 +15,41 @@ body {
   font-weight: 400;
   font-style: normal;
 }
+
+.markdown {
+  h1 {
+    @apply text-2xl font-bold mb-4 border-b border-backgroundPrimaryDark;
+  }
+  h2 {
+    @apply text-xl mb-4 border-b border-backgroundPrimaryDark;
+  }
+  h3,
+  h4,
+  h5,
+  h6,
+  p,
+  ul,
+  ol,
+  pre {
+    @apply mb-4;
+  }
+  ul {
+    @apply list-disc pl-4;
+  }
+  ol {
+    @apply list-decimal pl-4;
+  }
+  a {
+    @apply underline;
+  }
+  blockquote {
+    @apply border-l-4 border-backgroundPrimaryDark pl-4 italic;
+  }
+  table {
+    @apply border border-backgroundPrimaryDark w-full mb-4;
+    th,
+    td {
+      @apply border border-backgroundPrimaryDark p-2;
+    }
+  }
+}

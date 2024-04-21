@@ -22,5 +22,5 @@ export interface InputComponent {
 
 export interface TabData {
   label: string;
-  content: React.ReactNode;
+  content: React.ReactNode | (() => React.ReactNode);
 }

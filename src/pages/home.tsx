@@ -8,6 +8,7 @@ import Header from "../components/header";
 import Tabs from "../components/tabs";
 import LoadOrInitializeTemplate from "../hooks/load-or-initialize-template";
 import { getDatabaseDateKey } from "../utils";
+import Markdown from "markdown-to-jsx";
 
 export default function Home() {
   const { day } = useParams();
@@ -74,19 +75,25 @@ export default function Home() {
     }
   };
 
-  const inputComponentsToMarkdown = () => {
+  function inputComponentsToMarkdown(): string {
     if (!date) {
-      return null;
+      return "";
     }
 
     // today is an array of {label: string, value: any}
     const today = localStorage.getItem(getDatabaseDateKey(date));
     if (!today) {
-      return null;
+      return "null";
     }
 
     // add today's date as a header
-    let markdown = `# ${date}\n\n`;
+    const formattedDate = new Date(date).toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    let markdown = `# ${formattedDate}\n\n`;
 
     for (const inputComponent of inputComponents) {
       // add the inputComponent label as a header
@@ -124,9 +131,9 @@ export default function Home() {
       }
     }
 
-    console.log(markdown);
+    // console.log(markdown);
     return markdown;
-  };
+  }
 
   return (
     <>
@@ -137,21 +144,22 @@ export default function Home() {
         tabsData={[
           {
             label: "Edit",
-            content: inputComponents.map((item, index) =>
-              renderInputComponent(item, index),
-            ),
+            content: () =>
+              inputComponents.map((item, index) =>
+                renderInputComponent(item, index),
+              ),
           },
           {
             label: "View",
-            content: (
-              <div className="p-4 bg-backgroundPrimaryDark mt-2">
-                <code>{inputComponentsToMarkdown()}</code>
+            content: () => (
+              <div className="markdown">
+                <Markdown>{inputComponentsToMarkdown()}</Markdown>
               </div>
             ),
           },
           {
             label: "Calendar",
-            content: <p className="text-center mt-2">Coming soon! 😉</p>,
+            content: <p className="text-center mt-2 mb-8">Coming soon! 😉</p>,
           },
         ]}
       />
