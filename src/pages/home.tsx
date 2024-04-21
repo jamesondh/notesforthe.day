@@ -5,6 +5,7 @@ import { handleResetDay } from "../utils";
 import Checkboxes from "../components/checkboxes";
 import Textarea from "../components/textarea";
 import Header from "../components/header";
+import Tabs from "../components/tabs";
 import LoadOrInitializeTemplate from "../hooks/load-or-initialize-template";
 
 export default function Home() {
@@ -77,7 +78,24 @@ export default function Home() {
       {date && (
         <Header date={date} setDate={setDate} handleResetDay={handleResetDay} />
       )}
-      {inputComponents.map((item, index) => renderInputComponent(item, index))}
+      <Tabs
+        tabsData={[
+          {
+            label: "Edit view",
+            content: inputComponents.map((item, index) =>
+              renderInputComponent(item, index),
+            ),
+          },
+          {
+            label: "Print view",
+            content: <p className="text-center mt-2">Coming soon! 😉</p>,
+          },
+          {
+            label: "Calendar view",
+            content: <p className="text-center mt-2">Coming soon! 😉</p>,
+          },
+        ]}
+      />
     </>
   );
 }

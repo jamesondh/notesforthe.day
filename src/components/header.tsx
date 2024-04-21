@@ -55,7 +55,7 @@ export default function Header({
   }, [theme]);
 
   return (
-    <div className="mb-4">
+    <div className="mb-2">
       <div className="flex justify-between mt-3 mx-2">
         <div>
           <h1 className="text-2xl zilla-slab">
@@ -106,7 +106,7 @@ export default function Header({
         )}
       </div>
 
-      <Hr />
+      {!setDate && <Hr />}
     </div>
   );
 }

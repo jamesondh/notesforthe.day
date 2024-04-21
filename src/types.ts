@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface CheckboxItem {
   name: string;
   checked: boolean;
@@ -16,4 +18,9 @@ export interface InputComponent {
   rows?: number;
   initialList?: string[];
   addPlaceholder?: string;
+}
+
+export interface TabData {
+  label: string;
+  content: React.ReactNode;
 }
