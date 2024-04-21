@@ -1,6 +1,3 @@
-import { useState } from "react";
-import InputText from "./input-text";
-
 const border: string = "border-b px-4 py-2 border-backgroundPrimaryDark";
 
 /**
@@ -9,36 +6,12 @@ const border: string = "border-b px-4 py-2 border-backgroundPrimaryDark";
  * Documentation: https://v0.dev/docs#integrating-generated-code-into-your-nextjs-app
  */
 export default function Schedule() {
-  const [newEvent, setNewEvent] = useState<string>("");
-
   return (
     <div>
       <p className="mt-6 mb-12 text-center">
         This is a mockup. Coming soon: events from your notes will show up in
-        here. On this page, you'll be able to create new events for any of your
-        checkboxes sections.
+        here.
       </p>
-      <div className="flex justify-between grow mt-4 mb-1">
-        <InputText
-          placeholder="Add new event..."
-          value={newEvent}
-          onChange={(e) => setNewEvent(e)}
-        />
-        <button className="ml-1 w-26 flex-none text-sm btn bg-backgroundPrimaryDark rounded p-2 mr-1 shadow">
-          Set section
-        </button>
-        <button className="w-20 flex-none text-sm btn bg-backgroundPrimaryDark rounded p-2 mr-1 shadow">
-          Set time
-        </button>
-        <button className="w-20 flex-none text-sm btn bg-backgroundPrimaryDark rounded p-2 shadow">
-          Set color
-        </button>
-      </div>
-      <div className="w-full mb-2">
-        <button className="w-full btn bg-backgroundPrimaryDark rounded p-3 shadow">
-          Add new event
-        </button>
-      </div>
 
       <div className="overflow-auto">
         <table className="w-full table-auto">

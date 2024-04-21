@@ -59,7 +59,7 @@ export default function Header({
       <div className="flex justify-between mt-3 mx-2">
         <div>
           <h1 className="text-2xl zilla-slab">
-            <Link to="/">NotesForThe.Day</Link>
+            <Link to="/">☑️ NotesForThe.Day</Link>
           </h1>
         </div>
         {setDate && date && (

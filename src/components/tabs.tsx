@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { TabData } from "../types";
 import { getActiveTab, setActiveTab } from "../utils";
+import classNames from "classnames";
 
 interface TabsProps {
   tabsData: TabData[];
@@ -37,13 +38,17 @@ export default function Tabs({ tabsData }: TabsProps) {
 
   return (
     <div>
-      <div className="relative">
-        <div className="flex space-x-3 border-b border-backgroundPrimaryDark">
+      <div className="fixed left-0 bottom-0 bg-backgroundPrimary shadow w-screen">
+        <div className="flex">
           {tabsData.map((tab, idx) => (
             <button
               key={idx}
               ref={(el) => el && (tabsRef.current[idx] = el)}
-              className="pt-2 pb-3 flex-1 text-sm"
+              // className="pt-2 pb-3 flex-1 text-sm"
+              className={classNames(
+                "pt-2 pb-3 flex-1 text-sm",
+                idx === activeTabIndex && "bg-backgroundPrimaryDark",
+              )}
               onClick={() => {
                 setActiveTabIndex(idx);
                 setActiveTab(idx);
@@ -54,7 +59,7 @@ export default function Tabs({ tabsData }: TabsProps) {
           ))}
         </div>
         <span
-          className="absolute bottom-0 block h-1 bg-foregroundPrimary transition-all duration-300"
+          className="absolute top-0 block h-0.5 bg-foregroundPrimary transition-all duration-300"
           style={{ left: tabUnderlineLeft, width: tabUnderlineWidth }}
         />
       </div>

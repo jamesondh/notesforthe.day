@@ -144,14 +144,14 @@ export default function Home() {
       <Tabs
         tabsData={[
           {
-            label: "Edit",
+            label: "Edit ✍️",
             content: () =>
               inputComponents.map((item, index) =>
                 renderInputComponent(item, index),
               ),
           },
           {
-            label: "View",
+            label: "View 📖",
             content: () => (
               <div className="markdown">
                 <Markdown>{inputComponentsToMarkdown()}</Markdown>
@@ -159,7 +159,7 @@ export default function Home() {
             ),
           },
           {
-            label: "Calendar",
+            label: "Calendar 🗓️",
             content: <Schedule />,
           },
         ]}
