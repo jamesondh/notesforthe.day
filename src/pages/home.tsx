@@ -119,32 +119,35 @@ export default function Home() {
     let markdown = `# ${formattedDate}\n\n`;
 
     for (const inputComponent of inputComponents) {
-      // add the inputComponent label as a header
-      markdown += `## ${inputComponent.label}\n\n`;
-
-      // find the element in today that corresponds to this inputComponent
-      const element = JSON.parse(today).find(
+      // find the entry in today that corresponds to this inputComponent
+      const entry = JSON.parse(today).find(
         (item: { label: string }) => item.label === inputComponent.label,
       );
 
-      // continue if the value is empty
-      if (!element || !element.value) {
+      // skip if the value is empty or has an array length of 0
+      if (!entry || !entry.value) {
         continue;
       }
+      if (Array.isArray(entry.value) && entry.value.length === 0) {
+        continue;
+      }
+
+      // add the inputComponent label as a header
+      markdown += `## ${inputComponent.label}\n\n`;
 
       // render text as-is, and checkboxes as a markdown todo list
       switch (inputComponent.type) {
         case InputType.Textarea:
-          markdown += `${element.value}\n\n`;
+          markdown += `${entry.value}\n\n`;
           break;
         case InputType.Checkbox:
           // continue if the value is empty
-          if (!element.value.length) {
+          if (!entry.value.length) {
             break;
           }
 
           // create a checkbox list for each item
-          for (const item of element.value) {
+          for (const item of entry.value) {
             markdown += `- [${item.checked ? "x" : " "}] ${item.name}\n`;
           }
           markdown += "\n";
