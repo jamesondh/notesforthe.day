@@ -38,7 +38,7 @@ export default function Tabs({ tabsData }: TabsProps) {
 
   return (
     <div>
-      <div className="fixed left-0 bottom-0 bg-backgroundPrimary shadow w-screen">
+      <div className="fixed left-0 -bottom-1 pb-1 bg-backgroundPrimary shadow w-screen">
         <div className="flex">
           {tabsData.map((tab, idx) => (
             <button

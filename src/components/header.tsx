@@ -34,6 +34,26 @@ export default function Header({
     navigate(`/${newDate}`);
   };
 
+  const handleNextDay = () => {
+    if (!date) {
+      return;
+    }
+
+    const nextDate = new Date(date);
+    nextDate.setDate(nextDate.getDate() + 1);
+    handleDateChange(nextDate.toISOString().split("T")[0]);
+  };
+
+  const handlePreviousDay = () => {
+    if (!date) {
+      return;
+    }
+
+    const previousDate = new Date(date);
+    previousDate.setDate(previousDate.getDate() - 1);
+    handleDateChange(previousDate.toISOString().split("T")[0]);
+  };
+
   const changeTheme = () => {
     const newTheme = currentTheme === "dark" ? "light" : "dark";
 
@@ -55,17 +75,29 @@ export default function Header({
   }, [currentTheme]);
 
   return (
-    <div className="mb-2">
-      <div className="flex justify-between mt-3 mx-2">
+    <div className="mb-2 mt-3">
+      <div className="flex justify-between">
         <div>
-          <h1 className="text-2xl zilla-slab">
-            <Link to="/">☑️ NotesForThe.Day</Link>
-          </h1>
+          <h1 className="text-xl sm:text-2xl zilla-slab">☑️ NotesForThe.Day</h1>
         </div>
         {setDate && date && (
-          <DateSelector value={date} onChange={handleDateChange} />
+          <div className="flex align-bottom">
+            <span
+              className="cursor-pointer mr-1 mr-1 sm:mr-3 pt-0.5 sm:pt-1"
+              onClick={handlePreviousDay}
+            >
+              ⬅️
+            </span>
+            <DateSelector value={date} onChange={handleDateChange} />
+            <p
+              className="cursor-pointer ml-1 sm:ml-3 pt-0.5 sm:pt-1"
+              onClick={handleNextDay}
+            >
+              ➡️
+            </p>
+          </div>
         )}
-        <div>
+        <div className="pt-0.5 sm:pt-1">
           <button className="btn mr-2" onClick={changeTheme}>
             {currentTheme === "dark" ? "🌞" : "🌙"}
           </button>
@@ -74,6 +106,15 @@ export default function Header({
           </button>
         </div>
       </div>
+      <Link to="/today" className="underline text-xs sm:text-sm mr-4 sm:mr-6">
+        Today
+      </Link>
+      <Link to="/about" className="underline text-xs sm:text-sm mr-4 sm:mr-6">
+        About
+      </Link>
+      <Link to="/analytics" className="underline text-xs sm:text-sm">
+        Analytics
+      </Link>
 
       <div
         className={`text-right transition-[max-height,padding] duration-300 ease-in-out overflow-hidden ${isSettingsVisible ? "max-h-24 py-2" : "max-h-0 py-0"}`}
@@ -111,7 +152,7 @@ export default function Header({
         )}
       </div>
 
-      {!setDate && <Hr />}
+      <Hr />
     </div>
   );
 }

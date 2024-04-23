@@ -11,7 +11,7 @@ export default function DateSelector({ value, onChange }: DateSelectorProps) {
         type="date"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        className="text-sm tracking-tight text-foregroundPrimary bg-backgroundPrimary h-full"
+        className="xs:text-xs text-sm tracking-tight text-foregroundPrimary bg-backgroundPrimary h-full"
         style={{ colorScheme: "dark", maxWidth: "6.9rem" }} // TODO: match theme
       />
     </div>
