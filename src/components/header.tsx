@@ -79,42 +79,46 @@ export default function Header({
       <div className="flex justify-between">
         <div>
           <h1 className="text-xl sm:text-2xl zilla-slab">☑️ NotesForThe.Day</h1>
+          <div className="mt-1 flex justify-between">
+            <Link to="/today" className="underline text-xs sm:text-sm">
+              Today
+            </Link>
+            <Link to="/about" className="underline text-xs sm:text-sm">
+              About
+            </Link>
+            <Link to="/analytics" className="underline text-xs sm:text-sm">
+              Analytics
+            </Link>
+          </div>
         </div>
         {setDate && date && (
-          <div className="flex align-bottom">
-            <span
-              className="cursor-pointer mr-1 mr-1 sm:mr-3 pt-0.5 sm:pt-1"
+          <div className="flex">
+            <button
+              className="cursor-pointer mr-1 mr-1 sm:mr-3"
               onClick={handlePreviousDay}
             >
               ⬅️
-            </span>
+            </button>
             <DateSelector value={date} onChange={handleDateChange} />
-            <p
-              className="cursor-pointer ml-1 sm:ml-3 pt-0.5 sm:pt-1"
+            <button
+              className="cursor-pointer ml-1 sm:ml-3"
               onClick={handleNextDay}
             >
               ➡️
-            </p>
+            </button>
           </div>
         )}
-        <div className="pt-0.5 sm:pt-1">
+        <div className="flex">
           <button className="btn mr-2" onClick={changeTheme}>
             {currentTheme === "dark" ? "🌞" : "🌙"}
           </button>
-          <button className="btn" onClick={toggleSettings}>
-            ⚙️
-          </button>
+          {(handleResetTemplate || setDate) && (
+            <button className="btn" onClick={toggleSettings}>
+              ⚙️
+            </button>
+          )}
         </div>
       </div>
-      <Link to="/today" className="underline text-xs sm:text-sm mr-4 sm:mr-6">
-        Today
-      </Link>
-      <Link to="/about" className="underline text-xs sm:text-sm mr-4 sm:mr-6">
-        About
-      </Link>
-      <Link to="/analytics" className="underline text-xs sm:text-sm">
-        Analytics
-      </Link>
 
       <div
         className={`text-right transition-[max-height,padding] duration-300 ease-in-out overflow-hidden ${isSettingsVisible ? "max-h-24 py-2" : "max-h-0 py-0"}`}
