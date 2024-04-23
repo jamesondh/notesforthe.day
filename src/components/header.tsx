@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import DateSelector from "./date-selector";
 import Hr from "./hr";
-import { getTheme } from "../utils";
+import { getTheme, setTheme } from "../utils";
 
 interface HeaderProps {
   date?: string;
@@ -18,7 +18,7 @@ export default function Header({
   handleResetTemplate,
 }: HeaderProps) {
   const [isSettingsVisible, setIsSettingsVisible] = useState(false);
-  const [theme, setTheme] = useState<string>(getTheme());
+  const [currentTheme, setCurrentTheme] = useState<string>(getTheme());
   const navigate = useNavigate();
 
   const toggleSettings = () => {
@@ -35,24 +35,24 @@ export default function Header({
   };
 
   const changeTheme = () => {
-    const newTheme = theme === "dark" ? "light" : "dark";
+    const newTheme = currentTheme === "dark" ? "light" : "dark";
+
+    setCurrentTheme(newTheme);
 
     setTheme(newTheme);
-
-    localStorage.setItem("theme", newTheme);
   };
 
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", theme);
+    document.documentElement.setAttribute("data-theme", currentTheme);
     // Add a listener to update the theme if the system preference changes
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
     const handleChange = (e: MediaQueryListEvent) =>
-      setTheme(e.matches ? "dark" : "light");
+      setCurrentTheme(e.matches ? "dark" : "light");
     mediaQuery.addListener(handleChange);
 
     // Clean up listener on component unmount
     return () => mediaQuery.removeListener(handleChange);
-  }, [theme]);
+  }, [currentTheme]);
 
   return (
     <div className="mb-2">
@@ -67,7 +67,7 @@ export default function Header({
         )}
         <div>
           <button className="btn mr-2" onClick={changeTheme}>
-            {theme === "dark" ? "🌞" : "🌙"}
+            {currentTheme === "dark" ? "🌞" : "🌙"}
           </button>
           <button className="btn" onClick={toggleSettings}>
             ⚙️

@@ -8,7 +8,7 @@ import Header from "../components/header";
 import Tabs from "../components/tabs";
 import Schedule from "../components/schedule";
 import LoadOrInitializeTemplate from "../hooks/load-or-initialize-template";
-import { getDatabaseDateKey } from "../utils";
+import { getNotesForDate } from "../utils";
 import Markdown from "markdown-to-jsx";
 
 export default function Home() {
@@ -24,7 +24,29 @@ export default function Home() {
 
   useEffect(() => {
     if (day) {
-      // verify that the day is in the correct format
+      // if "today", set the date to today
+      if (day === "today") {
+        setDate(new Date().toISOString().split("T")[0]);
+        return;
+      }
+
+      // if "yesterday", set the date to yesterday
+      if (day === "yesterday") {
+        const yesterday = new Date();
+        yesterday.setDate(yesterday.getDate() - 1);
+        setDate(yesterday.toISOString().split("T")[0]);
+        return;
+      }
+
+      // if "tomorrow", set the date to tomorrow
+      if (day === "tomorrow") {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        setDate(tomorrow.toISOString().split("T")[0]);
+        return;
+      }
+
+      // otherwise, verify that the day is in the correct format
       const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
       if (!dateRegex.test(day)) {
         window.location.href = "/404";
@@ -76,15 +98,15 @@ export default function Home() {
     }
   };
 
-  function inputComponentsToMarkdown(): string {
+  function renderInputComponentsAsMarkdown(): string {
     if (!date) {
-      return "";
+      return "Date has not been set.";
     }
 
     // today is an array of {label: string, value: any}
-    const today = localStorage.getItem(getDatabaseDateKey(date));
+    const today = getNotesForDate(date);
     if (!today) {
-      return "null";
+      return "No notes found for today.";
     }
 
     // add today's date as a header
@@ -154,7 +176,7 @@ export default function Home() {
             label: "View 📖",
             content: () => (
               <div className="markdown">
-                <Markdown>{inputComponentsToMarkdown()}</Markdown>
+                <Markdown>{renderInputComponentsAsMarkdown()}</Markdown>
               </div>
             ),
           },

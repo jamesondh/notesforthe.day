@@ -1,15 +1,15 @@
 import { CheckboxItem } from "./types";
 import { DATABASE_PREFIX } from "./constants";
 
-export function getDatabaseDateKey(date: string): string {
+function getDatabaseDateKey(date: string): string {
   return `${DATABASE_PREFIX}-${date}`;
 }
 
-export function getDatabaseDateTemplateKey(date: string): string {
+function getDatabaseDateTemplateKey(date: string): string {
   return `${DATABASE_PREFIX}-${date}-template`;
 }
 
-export function getDatabaseTemplateKey(): string {
+function getDatabaseTemplateKey(): string {
   return `${DATABASE_PREFIX}-template`;
 }
 
@@ -60,6 +60,11 @@ export function getTheme(): string {
     : "light";
 }
 
+export function setTheme(theme: string): void {
+  localStorage.setItem("theme", theme);
+}
+
+// TODO: replace this with routing
 export function getActiveTab(): number {
   const storedActiveTab = localStorage.getItem("activeTab");
   if (storedActiveTab) {
@@ -71,4 +76,28 @@ export function getActiveTab(): number {
 
 export function setActiveTab(index: number): void {
   localStorage.setItem("activeTab", index.toString());
+}
+
+export function getNotesForDate(date: string): string | null {
+  return localStorage.getItem(getDatabaseDateKey(date));
+}
+
+export function setNotesForDate(date: string, notes: string): void {
+  localStorage.setItem(getDatabaseDateKey(date), notes);
+}
+
+export function getTemplateForDate(date: string): string | null {
+  return localStorage.getItem(getDatabaseDateTemplateKey(date));
+}
+
+export function setTemplateForDate(date: string, template: string): void {
+  localStorage.setItem(getDatabaseDateTemplateKey(date), template);
+}
+
+export function getTemplate(): string | null {
+  return localStorage.getItem(getDatabaseTemplateKey());
+}
+
+export function setTemplate(template: string): void {
+  localStorage.setItem(getDatabaseTemplateKey(), template);
 }

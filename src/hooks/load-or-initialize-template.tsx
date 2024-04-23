@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 import { INITIAL_TEMPLATE } from "../constants";
-import { getDatabaseTemplateKey, getDatabaseDateTemplateKey } from "../utils";
+import {
+  setTemplate,
+  setTemplateForDate,
+  getTemplateForDate,
+  getTemplate,
+} from "../utils";
 import { InputComponent } from "../types";
 
 interface LoadOrInitializeTemplateProps {
@@ -17,8 +22,10 @@ export default function LoadOrInitializeTemplate({
 
     // if a date is passed, try to load the template for that date and return early
     if (date) {
-      const today = localStorage.getItem(getDatabaseDateTemplateKey(date));
+      const today = getTemplateForDate(date);
       if (today) {
+        // console.log("Found today's template");
+        // console.log("today", today);
         setValue(JSON.parse(today));
         return;
       }
@@ -26,24 +33,22 @@ export default function LoadOrInitializeTemplate({
 
     // use the global template (and create it if necessary)
     let template;
-    const globalTemplate = localStorage.getItem(getDatabaseTemplateKey());
+    const globalTemplate = getTemplate();
     if (globalTemplate) {
       template = JSON.parse(globalTemplate);
     } else {
-      localStorage.setItem(
-        getDatabaseTemplateKey(),
-        JSON.stringify(INITIAL_TEMPLATE),
-      );
+      setTemplate(JSON.stringify(INITIAL_TEMPLATE));
       template = INITIAL_TEMPLATE;
     }
     setValue(template);
+    // console.log("set template: ", JSON.stringify(template));
 
     // set today's template to the global template
     if (date) {
-      localStorage.setItem(
-        getDatabaseDateTemplateKey(date),
-        JSON.stringify(template),
-      );
+      // console.log("Setting today's template to the global template");
+      // console.log(JSON.stringify(template));
+      setTemplateForDate(date, JSON.stringify(template));
+      // console.log("Today's template set to the global template");
     }
   }, [date]);
 }

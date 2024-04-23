@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getDatabaseDateKey } from "../utils";
+import { getNotesForDate, setNotesForDate } from "../utils";
 import { InputComponent } from "../types";
 
 interface PushUpdateToDbProps {
@@ -19,17 +19,14 @@ export default function PushUpdateToDb({
   useEffect(() => {
     if (isLoaded) {
       // get today's entry from local storage
-      const today = localStorage.getItem(getDatabaseDateKey(date));
+      const today = getNotesForDate(date);
 
       // if there is no entry for today, create a new one
       if (!today) {
         // console.log("No entry for today, creating a new one");
         const newToday = [];
         newToday.push({ label, value });
-        localStorage.setItem(
-          getDatabaseDateKey(date),
-          JSON.stringify(newToday),
-        );
+        setNotesForDate(date, JSON.stringify(newToday));
         return;
       }
       // console.log("Entry for today found");
@@ -42,10 +39,7 @@ export default function PushUpdateToDb({
         // console.log("No data for this label, creating a new one");
         const newToday = JSON.parse(today);
         newToday.push({ label, value });
-        localStorage.setItem(
-          getDatabaseDateKey(date),
-          JSON.stringify(newToday),
-        );
+        setNotesForDate(date, JSON.stringify(newToday));
         return;
       } else {
         // console.log("Data for this label found");
@@ -61,10 +55,7 @@ export default function PushUpdateToDb({
         const newToday = JSON.parse(today).map((item: InputComponent) =>
           item.label === label ? { label, value } : item,
         );
-        localStorage.setItem(
-          getDatabaseDateKey(date),
-          JSON.stringify(newToday),
-        );
+        setNotesForDate(date, JSON.stringify(newToday));
       }
     }
   }, [value, isLoaded, date]);

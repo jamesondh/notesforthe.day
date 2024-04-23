@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getDatabaseTemplateKey } from "../utils";
+import { setTemplate, getTemplate } from "../utils";
 import { InputComponent, InputType } from "../types";
 import { CheckboxItem } from "../types";
 
@@ -34,7 +34,7 @@ export default function PushTemplateUpdateToDb({
     // );
 
     // return early if cannot get db entry
-    const templateFromDb = localStorage.getItem(getDatabaseTemplateKey());
+    const templateFromDb = getTemplate();
     if (!templateFromDb) return;
     const template: InputComponent[] = JSON.parse(templateFromDb);
     // console.log("got template", template);
@@ -67,9 +67,6 @@ export default function PushTemplateUpdateToDb({
     // console.log("updated template", updatedTemplate);
 
     // push the updated template to the db
-    localStorage.setItem(
-      getDatabaseTemplateKey(),
-      JSON.stringify(updatedTemplate),
-    );
+    setTemplate(JSON.stringify(updatedTemplate));
   }, [label, placeholderText, addPlaceholderText, sliderValue, list]);
 }

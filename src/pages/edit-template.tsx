@@ -3,7 +3,7 @@ import Header from "../components/header";
 import TemplateCard from "../components/template-card";
 import { InputType, InputComponent } from "../types";
 import LoadOrInitializeTemplate from "../hooks/load-or-initialize-template";
-import { handleResetTemplate, getDatabaseTemplateKey } from "../utils";
+import { handleResetTemplate, getTemplate, setTemplate } from "../utils";
 
 export default function EditTemplate() {
   const [inputComponents, setInputComponents] = useState<InputComponent[]>([]);
@@ -25,7 +25,7 @@ export default function EditTemplate() {
       },
     ]);
     // add the new text input to the local storage
-    const templateFromDb = localStorage.getItem(getDatabaseTemplateKey());
+    const templateFromDb = getTemplate();
     if (!templateFromDb) return;
     const template: InputComponent[] = JSON.parse(templateFromDb);
 
@@ -36,7 +36,7 @@ export default function EditTemplate() {
       placeholder: "",
       rows: 4,
     });
-    localStorage.setItem(getDatabaseTemplateKey(), JSON.stringify(template));
+    setTemplate(JSON.stringify(template));
   };
 
   const handleAddCheckboxInput = () => {
@@ -52,7 +52,7 @@ export default function EditTemplate() {
       },
     ]);
     // add the new checkbox input to the local storage
-    const templateFromDb = localStorage.getItem(getDatabaseTemplateKey());
+    const templateFromDb = getTemplate();
     if (!templateFromDb) return;
     const template: InputComponent[] = JSON.parse(templateFromDb);
 
@@ -63,7 +63,7 @@ export default function EditTemplate() {
       initialList: [],
       addPlaceholder: "",
     });
-    localStorage.setItem(getDatabaseTemplateKey(), JSON.stringify(template));
+    setTemplate(JSON.stringify(template));
   };
 
   const handleRemoveInputComponent = (index: number) => {
@@ -74,13 +74,12 @@ export default function EditTemplate() {
     newInputComponents.forEach((inputComponent, index) => {
       inputComponent.index = index;
     });
-    console.log("newInputComponents", newInputComponents);
 
     // update the inputComponents state
     setInputComponents(newInputComponents);
 
     // remove the input component at the given index from the local storage
-    const templateFromDb = localStorage.getItem(getDatabaseTemplateKey());
+    const templateFromDb = getTemplate();
     if (!templateFromDb) return;
     const template: InputComponent[] = JSON.parse(templateFromDb);
 
@@ -92,7 +91,7 @@ export default function EditTemplate() {
     });
 
     // update the local storage
-    localStorage.setItem(getDatabaseTemplateKey(), JSON.stringify(newTemplate));
+    setTemplate(JSON.stringify(newTemplate));
 
     // TODO: we shouldn't reload the page here, but refreshing the input component state isn't quite working
     window.location.reload();

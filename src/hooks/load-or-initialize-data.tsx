@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { getDatabaseDateKey } from "../utils";
+import { getNotesForDate } from "../utils";
 import { InputComponent } from "../types";
 
 interface LoadOrInitializeDataProps<T> {
@@ -24,7 +24,7 @@ export default function LoadOrInitializeData<T>({
     setIsLoaded(false);
 
     // get today's entry from local storage
-    const today = localStorage.getItem(getDatabaseDateKey(date));
+    const today = getNotesForDate(date);
 
     // if today's entry does not exist, set isLoaded to true, use initial value, and return early
     if (!today) {
